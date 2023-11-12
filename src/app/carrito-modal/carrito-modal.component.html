@@ -1,0 +1,14 @@
+<p>carrito-modal works!</p>
+<!-- carrito-modal.component.html -->
+<h2>Productos en el Carrito</h2>
+
+<div *ngIf="productosCarrito.length > 0; else noProductos">
+  <!-- Muestra la lista de productos -->
+  <ul>
+    <li *ngFor="let producto of productosCarrito">{{ producto.nombre }} - {{ producto.precio }}</li>
+  </ul>
+</div>
+
+<ng-template #noProductos>
+  <p>No hay productos en el carrito.</p>
+</ng-template>

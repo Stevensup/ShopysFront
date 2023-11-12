@@ -1,3 +1,4 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 /* sales.component.css */
 
 /* Estilos para el Navbar */
@@ -33,4 +34,14 @@
     bottom: 0;
     width: 100%;
   }
+  .search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px; /* Ajusta el margen según sea necesario */
+  }
   
+  /* Estilo para el cuadro de búsqueda */
+  .search-input {
+    flex: 1; /* Toma todo el espacio disponible en el contenedor */
+    margin-left: 16px; /* Ajusta el margen según sea necesario */
+  }

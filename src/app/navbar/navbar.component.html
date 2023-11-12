@@ -1,28 +1,26 @@
+<!-- Navbar -->
 <nav class="navbar">
-    <div class="logo">
-      <!-- Coloca aquí tu logotipo o nombre de la aplicación -->
-      <a routerLink="/">ShopysFront</a>
-    </div>
+  <div class="logo">
+    <!-- Coloca aquí tu logotipo o nombre de la aplicación -->
+    <a routerLink="/">ShopysFront</a>
+  </div>
+  <div class="nav-links">
+    <a routerLink="/productos">Consulta de Productos</a>
+    <a routerLink="/ventas">Ventas</a>
+    <a routerLink="/facturacion">Facturación</a>
+    <!-- Puedes agregar más enlaces según tus necesidades -->
+  </div>
+  <div class="user-actions">
     <div class="nav-links">
-      <a routerLink="/productos">Consulta de Productos</a>
-      <a routerLink="/ventas" >Ventas</a>
-      <a routerLink="/facturacion" >Facturación</a>
-
+      <a (click)="openLoginModal()">Iniciar sesión</a>
       <!-- Puedes agregar más enlaces según tus necesidades -->
     </div>
     <div class="user-actions">
+      <span (click)="openCarritoModal()">
+        <i class="fas fa-shopping-cart"></i>
+        {{ cantidadEnCarrito }}
+      </span>
+    </div>
     
-        <nav class="navbar">
-            <div class="nav-links">
-              <a (click)="openLoginModal()">Iniciar sesión</a>
-              <!-- Puedes agregar más enlaces según tus necesidades -->
-            </div>
-            <div class="user-actions">
-              <span>
-                <i class="fas fa-shopping-cart"></i>
-                {{ cantidadEnCarrito }}
-              </span>
-              <!-- Puedes agregar más acciones para el usuario, como cerrar sesión, etc. -->
-            </div>
-          </nav>
-  
+  </div>
+</nav>

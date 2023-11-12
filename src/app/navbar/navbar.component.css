@@ -1,33 +1,44 @@
 .navbar {
-    background-color: #B3E5E5; /* Cambia esto según tu esquema de colores */
-    color: #575252;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .logo a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  
-  .nav-links a {
-    text-decoration: none;
-    color: #575252;
-    margin: 0 15px;
-  }
-  
-  .user-actions a {
-    text-decoration: none;
-    color: white;
-    margin-left: 15px;
-  }
-  .modal-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
+  background-color: #B3E5E5;
+  color: #575252;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.logo a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #575252;
+  margin: 0 15px;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+}
+
+.user-actions a {
+  text-decoration: none;
+  color: white;
+  margin-left: 15px;
+}
+
+.modal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

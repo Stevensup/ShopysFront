@@ -1,1 +1,14 @@
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+/* @import '@angular/material/prebuilt-themes/deeppurple-amber.css'; */
+/* CSS para centrar el modal */
+.modal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Esto asegura que el contenedor ocupe toda la altura de la pantalla */
+  }
+  
+  /* Asegúrate de aplicar esta clase al contenedor de tu modal */
+  .login-modal-container {
+    /* Estilos específicos para tu modal, si es necesario */
+  }
+  

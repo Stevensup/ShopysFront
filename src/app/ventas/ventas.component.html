@@ -1,41 +1,66 @@
-<!-- sales.component.html -->
-
 <!-- Navbar -->
 <app-navbar></app-navbar>
-  
-  <!-- ventas.component.html -->
 
+<!-- ventas.component.html -->
 <div>
   <h2>Lista de Productos</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>descripcion</th>
-        <th>Agregar al carrito</th>
-        <th>Cantidad</th>
-        
-                <!-- Agrega más columnas según la estructura de tus datos -->
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let producto of productos">
-                <td>{{ producto.id }}</td>
-                <td>{{ producto.nombre }}</td>
-                <td>{{ producto.precio }}</td>
-                <td>{{ producto.descripcion}}</td>
-                <td><button (click)="agregarAlCarrito(producto)">Agregar al carrito</button></td>        
-                <td><input type="number" min="1" max="10" value="1"></td>
-                <td>{{producto.precio * producto.cantidad}}</td>
-                <!-- Agrega más celdas según la estructura de tus datos -->
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="search-container">
+    <mat-form-field class="search-input">
+      <input matInput (input)="aplicarFiltro($event)" placeholder="Filtrar">
+    </mat-form-field>
+  </div>
+    <mat-table [dataSource]="dataSource">
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let producto">{{ producto.id }}</mat-cell>
+    </ng-container>
 
+    <!-- Nombre Column -->
+    <ng-container matColumnDef="nombre">
+      <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+      <mat-cell *matCellDef="let producto">{{ producto.nombre }}</mat-cell>
+    </ng-container>
 
-          <!-- Footer -->
-        <app-footer></app-footer>
+    <!-- Precio Column -->
+    <ng-container matColumnDef="precio">
+      <mat-header-cell *matHeaderCellDef>Precio</mat-header-cell>
+      <mat-cell *matCellDef="let producto">{{ producto.precio }}</mat-cell>
+    </ng-container>
+
+    <!-- Descripción Column -->
+    <ng-container matColumnDef="descripcion">
+      <mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
+      <mat-cell *matCellDef="let producto">{{ producto.descripcion }}</mat-cell>
+    </ng-container>
+
+    <!-- Agregar al Carrito Column -->
+    <ng-container matColumnDef="agregarAlCarrito">
+      <mat-header-cell *matHeaderCellDef>Agregar al carrito</mat-header-cell>
+      <mat-cell *matCellDef="let producto">
+        <button mat-button (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Cantidad Column -->
+    <ng-container matColumnDef="cantidad">
+      <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
+      <mat-cell *matCellDef="let producto">
+        <input matInput type="number" min="1" max="10" value="1">
+      </mat-cell>
+    </ng-container>
+
+    <!-- Total Column -->
+    <ng-container matColumnDef="total">
+      <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+      <mat-cell *matCellDef="let producto">{{ producto.precio * producto.cantidad }}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[10]"></mat-paginator>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>
