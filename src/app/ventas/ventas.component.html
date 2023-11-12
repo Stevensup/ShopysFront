@@ -1,0 +1,41 @@
+<!-- sales.component.html -->
+
+<!-- Navbar -->
+<app-navbar></app-navbar>
+  
+  <!-- ventas.component.html -->
+
+<div>
+  <h2>Lista de Productos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>descripcion</th>
+        <th>Agregar al carrito</th>
+        <th>Cantidad</th>
+        
+                <!-- Agrega más columnas según la estructura de tus datos -->
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let producto of productos">
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>{{ producto.descripcion}}</td>
+                <td><button (click)="agregarAlCarrito(producto)">Agregar al carrito</button></td>        
+                <td><input type="number" min="1" max="10" value="1"></td>
+                <td>{{producto.precio * producto.cantidad}}</td>
+                <!-- Agrega más celdas según la estructura de tus datos -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+          <!-- Footer -->
+        <app-footer></app-footer>

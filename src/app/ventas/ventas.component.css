@@ -1,0 +1,36 @@
+/* sales.component.css */
+
+/* Estilos para el Navbar */
+.navbar {
+    background-color: #4e92d6; /* Cambia el color de fondo según tus preferencias */
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+  }
+  
+  /* Estilos para la Barra de búsqueda */
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para la Tabla de productos */
+  .table {
+    width: 100%;
+  }
+  
+  /* Estilos para el Paginador */
+  .pagination {
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  /* Estilos para el Footer */
+  footer {
+    background-color: #f8f9fa;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  

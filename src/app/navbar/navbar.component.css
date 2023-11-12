@@ -1,0 +1,28 @@
+.navbar {
+    background-color: #333; /* Cambia esto según tu esquema de colores */
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: white;
+    margin: 0 15px;
+  }
+  
+  .user-actions a {
+    text-decoration: none;
+    color: white;
+    margin-left: 15px;
+  }
+  
