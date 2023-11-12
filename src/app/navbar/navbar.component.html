@@ -4,9 +4,9 @@
       <a routerLink="/">ShopysFront</a>
     </div>
     <div class="nav-links">
-      <a routerLink="/productos" (click)="navegarAProductos()">Consulta de Productos</a>
-<a routerLink="/ventas" (click)="navegarAVentas()">Ventas</a>
-<a routerLink="/facturacion" (click)="navegarAFacturacion()">Facturación</a>
+      <a routerLink="/productos">Consulta de Productos</a>
+      <a routerLink="/ventas" >Ventas</a>
+      <a routerLink="/facturacion" >Facturación</a>
 
       <!-- Puedes agregar más enlaces según tus necesidades -->
     </div>
@@ -14,7 +14,7 @@
     
         <nav class="navbar">
             <div class="nav-links">
-              <a routerLink="/login" (click)="navegarALogin()">Iniciar sesión</a>
+              <a (click)="openLoginModal()">Iniciar sesión</a>
               <!-- Puedes agregar más enlaces según tus necesidades -->
             </div>
             <div class="user-actions">

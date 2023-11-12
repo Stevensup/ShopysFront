@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CarritoService } from '../carrito.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 
 @Component({
   selector: 'app-navbar',
@@ -10,8 +12,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
   cantidadEnCarrito: number = 0;
 
-  constructor(private carritoService: CarritoService, private router: Router) {}
-
+  constructor(private carritoService: CarritoService, private router: Router, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.carritoService.obtenerCantidadEnCarrito().subscribe(cantidad => {
@@ -19,24 +20,17 @@ export class NavbarComponent {
     });
   }
 
-  // Método para navegar a la página de productos
-  navegarAProductos() {
-    this.router.navigate(['/productos']);
-  }
+  // Agrega el método para abrir el modal de inicio de sesión
+  openLoginModal() {
+    const dialogRef = this.dialog.open(LoginModalComponent, {
+      width: '400px',
+    height: 'auto',
+    position: { top: '0', left: '50%' },
+    });
 
-  // Método para navegar a la página de ventas
-  navegarAVentas() {
-    this.router.navigate(['/ventas']);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El modal se cerró');
+      // Puedes agregar lógica adicional después de cerrar el modal si es necesario
+    });
   }
-
-  // Método para navegar a la página de facturación
-  navegarAFacturacion() {
-    this.router.navigate(['/facturacion']);
-  }
-
-  navegarALogin() {
-    this.router.navigate(['/login']);
-  }
-
-  // Otros métodos de navegación según sea necesario
 }

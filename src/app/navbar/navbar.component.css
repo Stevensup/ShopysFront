@@ -1,6 +1,6 @@
 .navbar {
-    background-color: #333; /* Cambia esto según tu esquema de colores */
-    color: white;
+    background-color: #B3E5E5; /* Cambia esto según tu esquema de colores */
+    color: #575252;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -16,7 +16,7 @@
   
   .nav-links a {
     text-decoration: none;
-    color: white;
+    color: #575252;
     margin: 0 15px;
   }
   
@@ -24,5 +24,10 @@
     text-decoration: none;
     color: white;
     margin-left: 15px;
+  }
+  .modal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
