@@ -21,6 +21,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CarritoModalComponent } from './carrito-modal/carrito-modal.component';
 import { CreateUserModalComponent } from './create-user-modal/create-user-modal.component';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClient } from '@angular/common/http';  
 
 
 @NgModule({
@@ -53,6 +54,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     FormsModule,
     MatIconModule,
+    MatInputModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [VentasComponent] // Corregido para bootstrappear AppComponent

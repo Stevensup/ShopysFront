@@ -28,21 +28,30 @@
         </tr>
       </tbody>
     </table>
-
+    <div *ngIf="errorMensaje" class="error-message">
+      {{ errorMensaje }}
+    </div>
     <ng-template #noProductos>
       <p>No hay productos en el carrito.</p>
     </ng-template>
   </div>
   
   <div class="buttons-container">
-    <div>
+    <div class="totals">
       <p>Total sin IVA: {{ totalSinIva | currency }}</p>
       <p>IVA: {{ iva | currency }}</p>
       <p>Total: {{ getTotal() | currency }} incluye el IVA !!</p>
     </div>
-    
-    <div>
-      <button mat-button (click)="pagar()">Pagar</button>
+  
+    <div class="payment-options">
+      <div class="form-group">
+        <label for="formaPago">Forma de Pago:</label>
+        <select id="formaPago" [(ngModel)]="formaPagoSeleccionada" (change)="seleccionarFormaPago()">
+          <option *ngFor="let formaPago of formasDePago" [value]="formaPago">{{ formaPago.nombre }}</option>
+        </select>
+        <button mat-button (click)="pagar()">Pagar</button>
+      </div>
     </div>
   </div>
+  
 </div>
