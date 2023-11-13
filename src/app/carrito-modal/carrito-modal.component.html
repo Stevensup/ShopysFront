@@ -1,14 +1,29 @@
-<p>carrito-modal works!</p>
 <!-- carrito-modal.component.html -->
-<h2>Productos en el Carrito</h2>
+<div class="carrito-modal">
+  <h2>Productos en el Carrito</h2>
+  <div class="table-container">
+    <button mat-button (click)="closeDialog()">Cerrar</button>
+    <table *ngIf="productosCarrito.length > 0; else noProductos">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productosCarrito">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.precio | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-<div *ngIf="productosCarrito.length > 0; else noProductos">
-  <!-- Muestra la lista de productos -->
-  <ul>
-    <li *ngFor="let producto of productosCarrito">{{ producto.nombre }} - {{ producto.precio }}</li>
-  </ul>
+  <ng-template #noProductos>
+    <p>No hay productos en el carrito.</p>
+  </ng-template>
+
+  <div *ngIf="productosCarrito.length > 0">
+    <p>Total: {{ getTotal() | currency }}</p>
+    <button mat-button (click)="pagar()">Pagar</button>
+  </div>
 </div>
-
-<ng-template #noProductos>
-  <p>No hay productos en el carrito.</p>
-</ng-template>
