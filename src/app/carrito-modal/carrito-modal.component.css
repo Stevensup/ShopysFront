@@ -67,14 +67,17 @@
   /* create-user-modal.component.css */
   
   .carrito-modal {
-      width: 400px;
-      max-width: 80%;
+      width: 800px;
+      max-width: 800px;
       margin: 0 auto;
       text-align: center;
       padding: 20px;
       background-color: #B3E5E5;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column; /* Cambia la dirección a columna para apilar verticalmente */
+      align-items: center;
     }
     
     form {
@@ -108,4 +111,12 @@
       background-color: #45a049;
     }
     
-  
+    .buttons-container {
+      margin-top: 20px; /* Ajusta el margen superior según tus preferencias */
+      display: flex;
+      justify-content: flex-end; /* Coloca los botones al final del contenedor */
+    }
+    
+    .buttons-container button {
+      margin-left: 10px; /* Ajusta el espacio entre botones según tus preferencias */
+    }

@@ -38,4 +38,26 @@ export class CarritoModalComponent {
     console.log('Pago realizado. Total a pagar:', this.getTotal());
     // Puedes agregar lógica adicional para procesar el pago si es necesario.
   }
+
+  confirmarEdicion(producto: any): void {
+    // Puedes realizar validaciones adicionales aquí antes de confirmar la edición
+  
+    // Recalcula los totales
+    this.actualizarTotales();
+  }
+  actualizarTotales(): void {
+    this.totalSinIva = this.productosCarrito.reduce((sum, producto) => sum + producto.precio * producto.cantidadInventario, 0);
+    this.iva = this.totalSinIva * 0.19;
+  }
+  quitarProducto(producto: any): void {
+    // Elimina el producto del array de productos en el carrito
+    const index = this.productosCarrito.indexOf(producto);
+    if (index !== -1) {
+      this.productosCarrito.splice(index, 1);
+    }
+  
+    // Recalcula los totales
+    this.actualizarTotales();
+  }
+  
 }

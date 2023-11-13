@@ -1,4 +1,3 @@
-<!-- carrito-modal.component.html -->
 <div class="carrito-modal">
   <h2>Productos en el Carrito</h2>
   <div class="table-container">
@@ -9,24 +8,41 @@
           <th>Nombre</th>
           <th>Precio</th>
           <th>Cantidad</th>
+          <th>Acciones</th> 
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let producto of productosCarrito">
           <td>{{ producto.nombre }}</td>
           <td>{{ producto.precio | currency }}</td>
-          <td>{{ producto.cantidadInventario}}</td>
+          <td>{{ producto.cantidadInventario }}</td>
+          <td>
+            <input type="number" [(ngModel)]="producto.cantidadInventario" />
+            <button mat-icon-button color="primary" (click)="confirmarEdicion(producto)">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="quitarProducto(producto)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
 
-  <ng-template #noProductos>
-    <p>No hay productos en el carrito.</p>
-  </ng-template>
-  <div *ngIf="productosCarrito.length > 0">
-    <p>Total sin IVA: {{ totalSinIva | currency }}</p>
-    <p>IVA: {{ iva | currency }}</p>
-    <p>Total: {{ getTotal() | currency }} incluye el IVA !!</p>
-    <button mat-button (click)="pagar()">Pagar</button>
+    <ng-template #noProductos>
+      <p>No hay productos en el carrito.</p>
+    </ng-template>
+  </div>
+  
+  <div class="buttons-container">
+    <div>
+      <p>Total sin IVA: {{ totalSinIva | currency }}</p>
+      <p>IVA: {{ iva | currency }}</p>
+      <p>Total: {{ getTotal() | currency }} incluye el IVA !!</p>
+    </div>
+    
+    <div>
+      <button mat-button (click)="pagar()">Pagar</button>
+    </div>
   </div>
 </div>
