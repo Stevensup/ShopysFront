@@ -4,6 +4,20 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import * as sha256 from 'sha256';
 
+export interface NuevoUsuario {
+  id: number;
+  nombre: string;
+  apellido: string;
+  email: string;
+  telefono: string;
+  direccion: string;
+  userPassword: string;
+  frecuente: boolean;
+  fechaRegistro: string;
+  ctaBloqueada: boolean;
+  intentosFallidos: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,5 +51,17 @@ export class AuthService {
   private hashPassword(password: string): string {
     // Implement your password hashing logic here (consider using a library like bcrypt)
     return sha256(password);
+  }
+
+  registrarUsuario(usuario: NuevoUsuario): Observable<any> {
+    // Puedes agregar lógica adicional si es necesario
+    const registroUrl = `${this.apiUrl}/cliente/registrar`; 
+    usuario.userPassword = this.hashPassword(usuario.userPassword);
+    return this.http.post(registroUrl, usuario).pipe(
+      catchError((error) => {
+        console.error('Error during user registration:', error);
+        return throwError('User registration failed. Please try again.');
+      })
+    );
   }
 }
