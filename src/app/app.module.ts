@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConsultaProductosComponent } from './consulta-productos/consulta-productos.component';
@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CarritoModalComponent } from './carrito-modal/carrito-modal.component';
+import { CreateUserModalComponent } from './create-user-modal/create-user-modal.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { CarritoModalComponent } from './carrito-modal/carrito-modal.component';
     LoginModalComponent,
     NavbarComponent,
     FooterComponent,
-    CarritoModalComponent  ],
+    CarritoModalComponent,
+    CreateUserModalComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -46,6 +48,9 @@ import { CarritoModalComponent } from './carrito-modal/carrito-modal.component';
     MatTableModule,
     MatButtonModule,
     MatTableModule,
+    MatInputModule,
+    MatPaginatorModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [VentasComponent] // Corregido para bootstrappear AppComponent

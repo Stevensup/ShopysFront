@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CarritoService } from '../carrito.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog'; // Importa MatDialog
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { CarritoModalComponent } from '../carrito-modal/carrito-modal.component'; 
 @Component({
@@ -22,12 +22,13 @@ export class NavbarComponent {
 
   // Agrega el método para abrir el modal de inicio de sesión
   openLoginModal() {
-    const dialogRef = this.dialog.open(LoginModalComponent, {
-      width: '400px',
-    height: 'auto',
-    position: { top: '0', left: '50%' },
-    panelClass: 'modal-container', 
-    });
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '400px';
+    dialogConfig.height = 'auto';
+    dialogConfig.position = { top: '50%', left: '50%' };
+    dialogConfig.panelClass = 'login-modal-container'; // Puedes aplicar estilos específicos si es necesario
+
+    const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('El modal se cerró');

@@ -1,14 +1,16 @@
-<h2>Login</h2>
-<!-- Agrega aquí tu formulario de inicio de sesión -->
-<p>login works!</p>
-<form>
-  <label for="username">Nombre de usuario:</label>
-  <input type="text" id="username" name="username" required>
+<!-- login-modal.component.html -->
+<div class="login-modal-container">
+  <h2>Login</h2>
+  <form (ngSubmit)="login()">
+    <label class="name" for="username">Nombre de usuario:</label>
+    <input type="text" id="username" name="username" [(ngModel)]="email" required>
 
-  <label for="password">Contraseña:</label>
-  <input type="password" id="password" name="password" required>
+    <label class="pass" for="password">Contraseña:</label>
+    <input type="password" id="password" name="password" [(ngModel)]="userPassword" required>
 
-  <button type="submit">Iniciar sesión</button>
-</form>
+    <button type="submit">Iniciar sesión</button>
+  </form>
 
-<button mat-button (click)="closeDialog()">Cerrar</button>
+  <button mat-button (click)="openCreateUserDialog()">Crear usuario</button>
+  <button mat-button (click)="closeDialog()">Cerrar</button>
+</div>
