@@ -6,16 +6,10 @@
   <h2>Lista de Productos</h2>
   <div class="search-container">
     <mat-form-field class="search-input">
-      <input matInput (input)="aplicarFiltro($event)" placeholder="Filtrar">
+      <input matInput (input)="aplicarFiltro($event)" placeholder="Filtrar" />
     </mat-form-field>
   </div>
-    <mat-table [dataSource]="dataSource">
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-      <mat-cell *matCellDef="let producto">{{ producto.id }}</mat-cell>
-    </ng-container>
-
+  <mat-table [dataSource]="dataSource">
     <!-- Nombre Column -->
     <ng-container matColumnDef="nombre">
       <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
@@ -31,33 +25,53 @@
     <!-- Descripción Column -->
     <ng-container matColumnDef="descripcion">
       <mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
-      <mat-cell *matCellDef="let producto">{{ producto.descripcion }}</mat-cell>
-    </ng-container>
-
-    <!-- Agregar al Carrito Column -->
-    <ng-container matColumnDef="agregarAlCarrito">
-      <mat-header-cell *matHeaderCellDef>Agregar al carrito</mat-header-cell>
       <mat-cell *matCellDef="let producto">
-        <button mat-button (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+        {{ producto.descripcion }}</mat-cell>
+    </ng-container>
+      <!-- Cantidad Column -->
+      <ng-container matColumnDef="cantidad">
+        <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
+        <mat-cell *matCellDef="let producto">
+          <div *ngIf="!producto.editandoCantidad">
+            {{ producto.cantidadInventario }}
+            <button mat-icon-button color="primary" (click)="editarCantidad(producto)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="producto.editandoCantidad">
+            <input type="number" [(ngModel)]="producto.nuevaCantidad" min="1" required>
+            <button mat-icon-button color="accent" (click)="actualizarCantidad(producto)">
+              <mat-icon>done</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="cancelarEdicion(producto)">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+
+         <!-- Categoría Column -->
+    <ng-container matColumnDef="categoria">
+      <mat-header-cell *matHeaderCellDef>Categoría</mat-header-cell>
+      <mat-cell *matCellDef="let producto">
+        {{ producto.categoria }}
       </mat-cell>
     </ng-container>
+    
+<!-- Agregar al Carrito Column -->
+<ng-container matColumnDef="agregarAlCarrito">
+  <mat-header-cell *matHeaderCellDef>Agregar al carrito</mat-header-cell>
+  <mat-cell *matCellDef="let producto">
+    <button mat-button (click)="agregarAlCarrito(producto)">
+      <mat-icon>add_shopping_cart</mat-icon> 
+    </button>
+  </mat-cell>
+</ng-container>
 
-    <!-- Cantidad Column -->
-    <ng-container matColumnDef="cantidad">
-      <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
-      <mat-cell *matCellDef="let producto">
-        <input matInput type="number" min="1" max="10" value="1">
-      </mat-cell>
-    </ng-container>
-
-    <!-- Total Column -->
-    <ng-container matColumnDef="total">
-      <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
-      <mat-cell *matCellDef="let producto">{{ producto.precio * producto.cantidad }}</mat-cell>
-    </ng-container>
 
     <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+    <mat-row *matRowDef="let row; columns: columnas"></mat-row>
   </mat-table>
   <mat-paginator [pageSizeOptions]="[10]"></mat-paginator>
 </div>

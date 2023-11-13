@@ -4,7 +4,6 @@ import { CarritoService } from '../carrito.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-ventas',
@@ -18,7 +17,7 @@ export class VentasComponent implements OnInit {
   dataSource = new MatTableDataSource<any>([]);
 
   // Agregamos la propiedad columnas
-  columnas: string[] = ['id', 'nombre', 'precio', 'descripcion', 'agregarAlCarrito', 'cantidad', 'total'];
+  columnas: string[] = [ 'nombre', 'precio', 'descripcion', 'cantidad','categoria', 'agregarAlCarrito'];
 
   // Referencia al paginador
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -38,6 +37,25 @@ export class VentasComponent implements OnInit {
       }
     );
   }
+
+  editarCantidad(producto: any): void {
+    producto.editandoCantidad = true;
+    producto.nuevaCantidad = producto.cantidadInventario;
+  }
+
+  actualizarCantidad(producto: any): void {
+    // Lógica para enviar la nueva cantidad a la base de datos
+    // ... (tu código para actualizar la cantidad en la base de datos)
+
+    // Después de actualizar, puedes hacer algo como esto
+    producto.cantidadInventario = producto.nuevaCantidad;
+    producto.editandoCantidad = false;
+  }
+
+  cancelarEdicion(producto: any): void {
+    producto.editandoCantidad = false;
+  }
+
   agregarAlCarrito(producto: any): void {
     console.log('Agregando al carrito:', producto);
     this.carritoService.agregarProducto(producto);

@@ -8,12 +8,14 @@
         <tr>
           <th>Nombre</th>
           <th>Precio</th>
+          <th>Cantidad</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let producto of productosCarrito">
           <td>{{ producto.nombre }}</td>
           <td>{{ producto.precio | currency }}</td>
+          <td>{{ producto.cantidadInventario}}</td>
         </tr>
       </tbody>
     </table>
@@ -21,9 +23,10 @@
   <ng-template #noProductos>
     <p>No hay productos en el carrito.</p>
   </ng-template>
-
   <div *ngIf="productosCarrito.length > 0">
-    <p>Total: {{ getTotal() | currency }}</p>
+    <p>Total sin IVA: {{ totalSinIva | currency }}</p>
+    <p>IVA: {{ iva | currency }}</p>
+    <p>Total: {{ getTotal() | currency }} incluye el IVA !!</p>
     <button mat-button (click)="pagar()">Pagar</button>
   </div>
 </div>

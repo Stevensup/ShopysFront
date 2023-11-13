@@ -10,21 +10,28 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class CarritoModalComponent {
   @Input() productosCarrito: any[] = [];
+  totalSinIva: number = 0;
+  iva: number = 0;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<CarritoModalComponent>, ) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<CarritoModalComponent>
+  ) {
     // Si estás utilizando MAT_DIALOG_DATA, asegúrate de inicializar productosCarrito
     // con los datos proporcionados por MAT_DIALOG_DATA.
-    if (data && data.productos) {
-      this.productosCarrito = data.productos;
-    }
+    this.productosCarrito = data && data.productos ? data.productos : [];
+
+    // Calcular el total sin IVA y el IVA
+    this.totalSinIva = this.productosCarrito.reduce((sum, producto) => sum + producto.precio, 0);
+    this.iva = this.totalSinIva * 0.19;
   }
+
   closeDialog() {
     this.dialogRef.close();
   }
+
   getTotal(): number {
-    const total = this.productosCarrito.reduce((sum, producto) => sum + producto.precio, 0);
-    const iva = total * 0.19;
-    return total + iva;
+    return this.totalSinIva + this.iva;
   }
 
   pagar(): void {
