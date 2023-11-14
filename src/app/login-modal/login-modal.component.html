@@ -1,5 +1,6 @@
 <!-- login-modal.component.html -->
 <div class="login-modal-container">
+  <button class="close-button" mat-button (click)="closeDialog()">X</button>
   <h2>Login</h2>
   <form (ngSubmit)="login()">
     <label class="name" for="username">Nombre de usuario:</label>
@@ -7,10 +8,13 @@
 
     <label class="pass" for="password">Contraseña:</label>
     <input type="password" id="password" name="password" [(ngModel)]="userPassword" required>
-
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <div *ngIf="isLoading">Cargando...</div>
     <button type="submit">Iniciar sesión</button>
   </form>
+  <div class="CreateUser">
+    <button class="CreateUser" (click)="openCreateUserDialog()">Crear usuario</button>
+  </div>
 
-  <button mat-button (click)="openCreateUserDialog()">Crear usuario</button>
-  <button mat-button (click)="closeDialog()">Cerrar</button>
+  
 </div>

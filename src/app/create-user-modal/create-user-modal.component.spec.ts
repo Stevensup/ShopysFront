@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CreateUserModalComponent } from './create-user-modal.component';
 
 describe('CreateUserModalComponent', () => {

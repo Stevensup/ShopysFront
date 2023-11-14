@@ -1,23 +1,24 @@
 <!-- Navbar -->
 <nav class="navbar">
   <div class="logo">
-    <!-- Coloca aquí tu logotipo o nombre de la aplicación -->
     <a routerLink="/">ShopysFront</a>
   </div>
   <div class="nav-links">
-    <!-- Puedes agregar más enlaces según tus necesidades -->
+    <div *ngIf="authService.isLoggedIn">
+      <button (click)="realizarAccion()">Factura</button>
+    </div>
+  </div>
+  <div class="user-actions">
+    <span (click)="openCarritoModal()">
+      <i class="fas fa-shopping-cart"></i>
+      {{ cantidadEnCarrito }}
+    </span>
   </div>
   <div class="user-actions">
     <div class="nav-links">
-      <a (click)="openLoginModal()">Iniciar sesión</a>
-      <!-- Puedes agregar más enlaces según tus necesidades -->
+      <a *ngIf="!authService.isLoggedIn" (click)="openLoginModal()">Iniciar sesión</a>
+      <a *ngIf="authService.isLoggedIn" (click)="cerrarSesion()">Cerrar sesión</a>
     </div>
-    <div class="user-actions">
-      <span (click)="openCarritoModal()">
-        <i class="fas fa-shopping-cart"></i>
-        {{ cantidadEnCarrito }}
-      </span>
-    </div>
-    
+   
   </div>
 </nav>

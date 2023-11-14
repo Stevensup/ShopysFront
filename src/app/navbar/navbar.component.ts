@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'; // Importa MatDialog
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { CarritoModalComponent } from '../carrito-modal/carrito-modal.component'; 
+import { AuthService } from '../auth.service';
+import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -11,12 +14,15 @@ import { CarritoModalComponent } from '../carrito-modal/carrito-modal.component'
 })
 export class NavbarComponent {
   cantidadEnCarrito: number = 0;
+  private isLoggedInVar: boolean = false;
 
-  constructor(private carritoService: CarritoService, private router: Router, public dialog: MatDialog) {}
+  constructor(private carritoService: CarritoService, private router: Router, public dialog: MatDialog, public authService: AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.carritoService.obtenerCantidadEnCarrito().subscribe(cantidad => {
       this.cantidadEnCarrito = cantidad;
+      this.authService.setLoggedIn(true);
+      this.cdr.detectChanges();
     });
   }
 
@@ -48,5 +54,21 @@ export class NavbarComponent {
       // Puedes agregar lógica adicional después de cerrar el modal si es necesario
     });
   }
+  realizarAccion(): void {
+    if (this.authService.isLoggedIn) {
+      console.log('Usuario autenticado. Realizando la acción...');
+      // Lógica cuando se hace clic en el nuevo botón
+    } else {
+      console.log('Usuario no autenticado. No se puede realizar la acción...');
+      // Puedes agregar lógica adicional si es necesario
+    }
+  }
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn;
+    window.location.reload();
+  }
 
+  cerrarSesion(): void {
+    this.authService.cerrarSesion();
+  }
 }

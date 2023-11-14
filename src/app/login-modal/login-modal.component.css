@@ -33,6 +33,7 @@
 
 h2 {
   color: #004d40; /* Color para el encabezado */
+  text-align: center;
 }
 
 form {
@@ -41,13 +42,9 @@ form {
   align-items: center;
 }
 
-label {
-  margin-top: 10px;
-  color: #dadada; /* Color para las etiquetas */
-}
 
 name, pass, button {
-  color: #dadada;
+  color: #575252;
 }
 
 input {
@@ -62,23 +59,40 @@ input {
 button {
   margin-top: 15px;
   padding: 10px;
-  background-color: #575252;
+  background-color: #B3E5E5;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #00332e; /* Color al pasar el ratón sobre el botón */
+  background-color: rgb(38, 101, 95); /* Color al pasar el ratón sobre el botón */
 }
 
-/* Estilos para el botón de cerrar */
-button.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.close-button {
   background-color: transparent;
-  color: white;
   border: none;
   cursor: pointer;
+  font-size: 14px; /* Tamaño del texto */
+  color: #333; /* Color por defecto del botón */
+}
+
+.close-button:hover {
+  color: #004d40; /* Cambio de color al pasar el ratón sobre el botón */
+}
+
+.CreateUser {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #B3E5E5;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* Agrega esta línea para centrar el botón */
+
 }

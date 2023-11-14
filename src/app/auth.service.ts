@@ -23,6 +23,7 @@ export interface NuevoUsuario {
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080';
+  private isLoggedInVar: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -43,8 +44,10 @@ export class AuthService {
     return this.http.post(loginUrl, requestBody).pipe(
       catchError((error) => {
         console.error('Error during login:', error);
+        console.log('Full server response:', error.error);  // Agrega esta línea
         return throwError('Authentication failed. Please check your credentials.');
       })
+    
     );
   }
 
@@ -59,9 +62,30 @@ export class AuthService {
     usuario.userPassword = this.hashPassword(usuario.userPassword);
     return this.http.post(registroUrl, usuario).pipe(
       catchError((error) => {
-        console.error('Error during user registration:', error);
-        return throwError('User registration failed. Please try again.');
+        console.error('Error during login:', error);
+        console.log('Full server response:', error.error);  // Agrega esta línea
+        return throwError('Authentication failed. Please check your credentials.');
       })
+      
     );
   }
+
+cerrarSesion(): void {
+  // Lógica para cerrar sesión, por ejemplo, llamar a un endpoint de cerrar sesión en el servidor.
+  // ...
+
+  // Actualiza la propiedad isLoggedIn
+  this.setLoggedIn(false);
+}
+
+
+  get isLoggedIn(): boolean {
+    return this.isLoggedInVar;
+  }
+
+  setLoggedIn(value: boolean): void {
+    this.isLoggedInVar = value;
+
+  }
+  
 }

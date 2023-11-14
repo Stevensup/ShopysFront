@@ -21,8 +21,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CarritoModalComponent } from './carrito-modal/carrito-modal.component';
 import { CreateUserModalComponent } from './create-user-modal/create-user-modal.component';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClient } from '@angular/common/http';  
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +34,8 @@ import { HttpClient } from '@angular/common/http';
     NavbarComponent,
     FooterComponent,
     CarritoModalComponent,
-    CreateUserModalComponent  ],
+    CreateUserModalComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -56,8 +56,9 @@ import { HttpClient } from '@angular/common/http';
     MatIconModule,
     MatInputModule,
     MatPaginatorModule,
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [VentasComponent] // Corregido para bootstrappear AppComponent
+  bootstrap: [VentasComponent], // Corregido para bootstrappear AppComponent
 })
-export class AppModule { }
+export class AppModule {}
