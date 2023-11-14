@@ -4,7 +4,7 @@
     <a routerLink="/">ShopysFront</a>
   </div>
   <div class="nav-links">
-    <div *ngIf="authService.isLoggedIn">
+    <div *ngIf="loginstatus">
       <button (click)="realizarAccion()">Factura</button>
     </div>
   </div>
@@ -16,8 +16,8 @@
   </div>
   <div class="user-actions">
     <div class="nav-links">
-      <a *ngIf="!authService.isLoggedIn" (click)="openLoginModal()">Iniciar sesión</a>
-      <a *ngIf="authService.isLoggedIn" (click)="cerrarSesion()">Cerrar sesión</a>
+      <a *ngIf="!loginstatus" (click)="openLoginModal()">Iniciar sesión</a>
+      <a *ngIf="loginstatus" (click)="cerrarSesion()">Cerrar sesión</a>
     </div>
    
   </div>

@@ -15,13 +15,15 @@ import { ChangeDetectorRef } from '@angular/core';
 export class NavbarComponent {
   cantidadEnCarrito: number = 0;
   private isLoggedInVar: boolean = false;
+  public loginstatus: boolean  =  false;
 
   constructor(private carritoService: CarritoService, private router: Router, public dialog: MatDialog, public authService: AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    console.log(this.loginstatus);
     this.carritoService.obtenerCantidadEnCarrito().subscribe(cantidad => {
       this.cantidadEnCarrito = cantidad;
-      this.authService.setLoggedIn(true);
+      this.authService.setLoggedIn(false);
       this.cdr.detectChanges();
     });
   }
@@ -33,12 +35,12 @@ export class NavbarComponent {
     dialogConfig.height = 'auto';
     dialogConfig.position = { top: '50%', left: '50%' };
     dialogConfig.panelClass = 'login-modal-container'; // Puedes aplicar estilos específicos si es necesario
-
+    
     const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('El modal se cerró');
-      // Puedes agregar lógica adicional después de cerrar el modal si es necesario
+      this.loginstatus = localStorage.getItem('email')? true : false;
     });
   }
 
@@ -55,9 +57,10 @@ export class NavbarComponent {
     });
   }
   realizarAccion(): void {
-    if (this.authService.isLoggedIn) {
+    if (this.loginstatus) {
       console.log('Usuario autenticado. Realizando la acción...');
-      // Lógica cuando se hace clic en el nuevo botón
+      // Puedes agregar lógica adicional si es necesario
+      this.router.navigate(['/facturacion']);
     } else {
       console.log('Usuario no autenticado. No se puede realizar la acción...');
       // Puedes agregar lógica adicional si es necesario
@@ -65,7 +68,6 @@ export class NavbarComponent {
   }
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
-    window.location.reload();
   }
 
   cerrarSesion(): void {

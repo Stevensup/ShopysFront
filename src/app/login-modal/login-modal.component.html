@@ -5,7 +5,6 @@
   <form (ngSubmit)="login()">
     <label class="name" for="username">Nombre de usuario:</label>
     <input type="text" id="username" name="username" [(ngModel)]="email" required>
-
     <label class="pass" for="password">Contraseña:</label>
     <input type="password" id="password" name="password" [(ngModel)]="userPassword" required>
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>

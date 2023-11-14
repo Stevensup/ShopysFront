@@ -19,7 +19,7 @@ export interface NuevoUsuario {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080';
@@ -32,22 +32,25 @@ export class AuthService {
 
     const requestBody = {
       email: email,
-      userPassword: encryptedPassword
+      userPassword: encryptedPassword,
     };
-     console.log('requestBody', requestBody);
-     console.log('this.apiUrl', this.apiUrl);
-     console.log(userPassword)
+    console.log('requestBody', requestBody);
+    console.log('this.apiUrl', this.apiUrl);
+    console.log(userPassword);
     const loginUrl = `${this.apiUrl}/login`;
 
     console.log('Making login request to:', loginUrl);
 
+    localStorage.setItem('email', email);
+
     return this.http.post(loginUrl, requestBody).pipe(
       catchError((error) => {
         console.error('Error during login:', error);
-        console.log('Full server response:', error.error);  // Agrega esta línea
-        return throwError('Authentication failed. Please check your credentials.');
+        console.log('Full server response:', error.error); // Agrega esta línea
+        return throwError(
+          'Authentication failed. Please check your credentials.'
+        );
       })
-    
     );
   }
 
@@ -58,26 +61,22 @@ export class AuthService {
 
   registrarUsuario(usuario: NuevoUsuario): Observable<any> {
     // Puedes agregar lógica adicional si es necesario
-    const registroUrl = `${this.apiUrl}/cliente/registrar`; 
+    const registroUrl = `${this.apiUrl}/cliente/registrar`;
     usuario.userPassword = this.hashPassword(usuario.userPassword);
     return this.http.post(registroUrl, usuario).pipe(
       catchError((error) => {
         console.error('Error during login:', error);
-        console.log('Full server response:', error.error);  // Agrega esta línea
-        return throwError('Authentication failed. Please check your credentials.');
+        console.log('Full server response:', error.error); // Agrega esta línea
+        return throwError(
+          'Authentication failed. Please check your credentials.'
+        );
       })
-      
     );
   }
 
-cerrarSesion(): void {
-  // Lógica para cerrar sesión, por ejemplo, llamar a un endpoint de cerrar sesión en el servidor.
-  // ...
-
-  // Actualiza la propiedad isLoggedIn
-  this.setLoggedIn(false);
-}
-
+  cerrarSesion(): void {
+    this.setLoggedIn(false);
+  }
 
   get isLoggedIn(): boolean {
     return this.isLoggedInVar;
@@ -85,7 +84,5 @@ cerrarSesion(): void {
 
   setLoggedIn(value: boolean): void {
     this.isLoggedInVar = value;
-
   }
-  
 }
