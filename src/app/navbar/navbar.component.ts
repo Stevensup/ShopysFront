@@ -6,6 +6,7 @@ import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { CarritoModalComponent } from '../carrito-modal/carrito-modal.component'; 
 import { AuthService } from '../auth.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { FacturacionComponent } from '../facturacion/facturacion.component';
 
 @Component({
   selector: 'app-navbar',
@@ -57,14 +58,15 @@ export class NavbarComponent {
     });
   }
   realizarAccion(): void {
-    if (this.loginstatus) {
-      console.log('Usuario autenticado. Realizando la acción...');
-      // Puedes agregar lógica adicional si es necesario
-      this.router.navigate(['/facturacion']);
-    } else {
-      console.log('Usuario no autenticado. No se puede realizar la acción...');
-      // Puedes agregar lógica adicional si es necesario
-    }
+    const dialogRef = this.dialog.open(FacturacionComponent, {
+      width: '400px',
+      data: { productos: this.carritoService.obtenerProductosEnCarrito() } // Pasa los productos al modal
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El modal de carrito se cerró');
+      // Puedes agregar lógica adicional después de cerrar el modal si es necesario
+    });
   }
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;

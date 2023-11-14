@@ -1,5 +1,5 @@
 <div class="carrito-modal">
-  <h2>Productos en el Carrito</h2>
+  <h2>Resumen de la Compra</h2>
   <div class="table-container">
     <button mat-button (click)="closeDialog()">Cerrar</button>
     <table *ngIf="productosCarrito.length > 0; else noProductos">
@@ -38,18 +38,17 @@
   
   <div class="buttons-container">
     <div class="totals">
-      <p>Total sin IVA: {{ totalSinIva | currency }}</p>
-      <p>IVA: {{ iva | currency }}</p>
       <p>Total: {{ getTotal() | currency }} incluye el IVA !!</p>
     </div>
   
     <div class="payment-options">
       <div class="form-group">
         <label for="formaPago">Forma de Pago:</label>
-        <select id="formaPago" [(ngModel)]="formaPagoSeleccionada" (change)="seleccionarFormaPago()">
+        <select id="formaPago" [(ngModel)]="formaPagoSeleccionada" (change)="seleccionarFormaPago()"required>
           <option *ngFor="let formaPago of formasDePago" [value]="formaPago">{{ formaPago.nombre }}</option>
         </select>
         <button mat-button (click)="pagar()">Pagar</button>
+        <div *ngIf="errorMensaje" class="error-message">{{ errorMensaje }}</div>
       </div>
     </div>
   </div>

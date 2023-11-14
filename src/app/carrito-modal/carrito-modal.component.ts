@@ -1,7 +1,13 @@
 import { Component, Inject, Input } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogConfig,
+  MatDialog,
+} from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http'; // Importa el HttpClient
+import { FacturacionComponent } from '../facturacion/facturacion.component';
+import { LoginModalComponent } from '../login-modal/login-modal.component';
 
 @Component({
   selector: 'app-carrito-modal',
@@ -19,7 +25,8 @@ export class CarritoModalComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<CarritoModalComponent>,
-    private http: HttpClient // Inyecta el servicio HttpClient
+    private http: HttpClient,
+    public dialog: MatDialog
   ) {
     // Si estás utilizando MAT_DIALOG_DATA, asegúrate de inicializar productosCarrito
     // con los datos proporcionados por MAT_DIALOG_DATA.
@@ -42,7 +49,27 @@ export class CarritoModalComponent {
 
   pagar(): void {
     console.log('Pago realizado. Total a pagar:', this.getTotal());
-    // Puedes agregar lógica adicional para procesar el pago si es necesario.
+    const isLogin = localStorage.getItem('email');
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '400px';
+    dialogConfig.height = 'auto';
+    dialogConfig.position = { top: '50%', left: '50%' };
+    if (this.formaPagoSeleccionada != null) {
+    if (isLogin) {
+      console.log('sesion iniciada');
+      const dialogRef = this.dialog.open(FacturacionComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log('El modal se cerró');
+      });
+    } else {
+      console.log('sesion no iniciada');
+      const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log('El modal se cerró');
+      });
+    } } else {
+      this.errorMensaje = 'Seleccione una forma de pago';
+    }
   }
 
   confirmarEdicion(producto: any): void {
