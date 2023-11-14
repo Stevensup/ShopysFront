@@ -21,6 +21,7 @@ export class NavbarComponent {
   constructor(private carritoService: CarritoService, private router: Router, public dialog: MatDialog, public authService: AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.loginstatus = localStorage.getItem('email')? true : false;
     console.log(this.loginstatus);
     this.carritoService.obtenerCantidadEnCarrito().subscribe(cantidad => {
       this.cantidadEnCarrito = cantidad;
@@ -74,5 +75,6 @@ export class NavbarComponent {
 
   cerrarSesion(): void {
     this.authService.cerrarSesion();
+    this.loginstatus = false;
   }
 }

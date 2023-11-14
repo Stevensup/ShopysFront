@@ -76,6 +76,7 @@ export class AuthService {
 
   cerrarSesion(): void {
     this.setLoggedIn(false);
+    localStorage.removeItem('email');
   }
 
   get isLoggedIn(): boolean {
