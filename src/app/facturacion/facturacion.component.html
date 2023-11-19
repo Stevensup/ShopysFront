@@ -35,23 +35,22 @@
       <p>Factura Vacia</p>
     </ng-template>
   </div>
-  
+
   <div class="buttons-container">
     <div class="totals">
       <p>Total: {{ getTotal() | currency }} incluye el IVA !!</p>
-      <br>
+      <br />
     </div>
-  
+
     <div *ngIf="formaPagoSeleccionada">
-      <p>Forma de Pago Seleccionada: {{ formaPagoSeleccionada.nombre }}</p>
-    </div>
-      
+      <p>Forma de Pago:</p>
+      <pre>{{ formaPagoSeleccionada | json }}</pre>
+          </div>
+    
+
     <div class="form-group">
       <button mat-button (click)="pagar()">Pagar</button>
       <div *ngIf="errorMensaje" class="error-message">{{ errorMensaje }}</div>
     </div>
-      
   </div>
 </div>
-<!-- END: be15d9bcejpp -->
-  

@@ -39,8 +39,8 @@
     <div class="payment-options">
       <div class="form-group">
         <label for="formaPago">Forma de Pago:</label>
-        <select id="formaPago" [(ngModel)]="formaPagoSeleccionada" (change)="seleccionarFormaPago()"required>
-          <option *ngFor="let formaPago of formasDePago" [value]="formaPago">{{ formaPago.nombre }}</option>
+        <select id="formaPago" [(ngModel)]="formaPagoSeleccionada" (change)="seleccionarFormaPago()" required>
+          <option *ngFor="let formaPago of formasDePago" [value]="formaPago.nombre">{{ formaPago.nombre }}</option>
         </select>
         <button mat-button (click)="pagar()"> Ir a Pagar</button>
         <p>Total: {{ getTotal() | currency }} No incluye el IVA !!</p>

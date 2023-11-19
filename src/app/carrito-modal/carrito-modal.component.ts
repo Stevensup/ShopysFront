@@ -40,6 +40,8 @@ export class CarritoModalComponent {
     this.obtenerFormasDePago();
   }
 
+  
+
   closeDialog() {
     this.dialogRef.close();
   }
@@ -58,8 +60,13 @@ export class CarritoModalComponent {
     if (this.formaPagoSeleccionada != null) {
     if (isLogin) {
       console.log('sesion iniciada');
+      console.log('Forma de Pago seleccionada:', this.formaPagoSeleccionada);
+      console.log('Nombre de la forma de pago:', this.formaPagoSeleccionada.nombre);
       const dialogRef = this.dialog.open(FacturacionComponent, {
-        data: { productos: this.productosCarrito, formaPagoSeleccionada: this.formaPagoSeleccionada},
+        data: { 
+          productos: this.productosCarrito, 
+          formaPagoSeleccionada: this.formaPagoSeleccionada 
+        },
         width: '400px',
         height: 'auto',
         panelClass: 'facturacion-modal-container',

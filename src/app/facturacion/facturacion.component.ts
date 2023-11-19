@@ -98,7 +98,10 @@ export class FacturacionComponent implements OnInit{
   }
 
   seleccionarFormaPago() {
-    // Puedes realizar acciones según la forma de pago seleccionada
+    // Obtener el objeto completo de la forma de pago seleccionada
+    this.formaPagoSeleccionada = this.formasDePago.find(fp => fp.id === parseInt(this.formaPagoSeleccionada));
+
+    // Puedes realizar otras acciones según la forma de pago seleccionada
     // Por ejemplo, mostrar solo el nombre si está disponible
     if (this.formaPagoSeleccionada && this.formaPagoSeleccionada.disponible) {
       console.log('Nombre de la forma de pago seleccionada:', this.formaPagoSeleccionada.nombre);
