@@ -43,6 +43,9 @@ login(): void {
         console.log('Respuesta del backend:', response);
         // Puedes realizar acciones adicionales después de un inicio de sesión exitoso
         // Por ejemplo, cerrar el modal
+        localStorage.setItem('usuario', JSON.stringify(response));
+        const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+        console.log(usuario);
         this.dialogRef.close();
       }),
       catchError((error) => {

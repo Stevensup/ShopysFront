@@ -49,7 +49,7 @@ export class CarritoModalComponent {
 
   pagar(): void {
     console.log('Pago realizado. Total a pagar:', this.getTotal());
-    const isLogin = localStorage.getItem('email');
+    const isLogin = localStorage.getItem('usuario');
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '400px';
     dialogConfig.height = 'auto';

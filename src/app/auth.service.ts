@@ -41,7 +41,7 @@ export class AuthService {
 
     console.log('Making login request to:', loginUrl);
 
-    localStorage.setItem('email', email);
+    
 
     return this.http.post(loginUrl, requestBody).pipe(
       catchError((error) => {
@@ -76,7 +76,7 @@ export class AuthService {
 
   cerrarSesion(): void {
     this.setLoggedIn(false);
-    localStorage.removeItem('email');
+    localStorage.removeItem('usuario');
   }
 
   get isLoggedIn(): boolean {

@@ -17,11 +17,13 @@ export class NavbarComponent {
   cantidadEnCarrito: number = 0;
   private isLoggedInVar: boolean = false;
   public loginstatus: boolean  =  false;
+  public usuario: any = null;
 
   constructor(private carritoService: CarritoService, private router: Router, public dialog: MatDialog, public authService: AuthService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.loginstatus = localStorage.getItem('email')? true : false;
+    this.usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    this.loginstatus = localStorage.getItem('usuario')? true : false;
     console.log(this.loginstatus);
     this.carritoService.obtenerCantidadEnCarrito().subscribe(cantidad => {
       this.cantidadEnCarrito = cantidad;
@@ -42,7 +44,8 @@ export class NavbarComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('El modal se cerró');
-      this.loginstatus = localStorage.getItem('email')? true : false;
+      this.loginstatus = localStorage.getItem('usuario')? true : false;
+      this.usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     });
   }
 
@@ -71,10 +74,11 @@ export class NavbarComponent {
   }
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn;
-  }
+   }
 
   cerrarSesion(): void {
     this.authService.cerrarSesion();
     this.loginstatus = false;
+    this.usuario = null;
   }
 }
