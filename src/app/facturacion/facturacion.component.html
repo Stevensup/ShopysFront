@@ -4,14 +4,30 @@
   <h2>Factura</h2>
   <div class="table-container">
     <button mat-button (click)="closeDialog()">Cerrar</button>
-    <div *ngIf="clienteDetails">
+    <div *ngIf="clienteDetails" class="cliente-details">
       <h2>Detalles del Cliente</h2>
-      <p><strong>Nombre:</strong> {{ clienteDetails.nombre }}</p>
-      <p><strong>Apellido:</strong> {{ clienteDetails.apellido }}</p>
-      <p><strong>Email:</strong> {{ clienteDetails.email }}</p>
-      <p><strong>Telefono:</strong> {{ clienteDetails.telefono }}</p>
-      <p><strong>Direccion:</strong> {{ clienteDetails.direccion }}</p>
+      <table>
+        <tr>
+          <td><strong>Nombre:</strong> {{ clienteDetails.nombre }}</td>
+          <td><strong>Apellido:</strong> {{ clienteDetails.apellido }}</td>
+        </tr>
+        <tr>
+          <td><strong>Email:</strong> {{ clienteDetails.email }}</td>
+          <td><strong>Telefono:</strong> {{ clienteDetails.telefono }}</td>
+        </tr>
+        <tr>
+          <td colspan="2"><strong>Direccion:</strong> {{ clienteDetails.direccion }}</td>
+        </tr>
+      </table>
+      <div *ngIf="formaPagoSeleccionada">
+        <p>Forma de Pago:</p>
+        <pre>{{ formaPagoSeleccionada | json }}</pre>
+            </div>
+      
     </div>
+    
+    
+    
     <table *ngIf="productosCarrito.length > 0; else noProductos">
       <thead>
         <tr>
@@ -42,11 +58,7 @@
       <br />
     </div>
 
-    <div *ngIf="formaPagoSeleccionada">
-      <p>Forma de Pago:</p>
-      <pre>{{ formaPagoSeleccionada | json }}</pre>
-          </div>
-    
+
 
     <div class="form-group">
       <button mat-button (click)="pagar()">Pagar</button>

@@ -121,3 +121,14 @@
   .buttons-container button {
     margin-left: 10px; /* Ajusta el espacio entre botones según tus preferencias */
   }
+  .cliente-details {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .cliente-details div {
+    margin-bottom: 5px;
+  }
+  
