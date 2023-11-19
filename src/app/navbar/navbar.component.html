@@ -3,23 +3,24 @@
   <div class="logo">
     <a routerLink="/">ShopysFront</a>
   </div>
-  <div class="nav-links">
-    <div *ngIf="loginstatus">
-      <button (click)="realizarAccion()">Factura</button>
-    </div>
-  </div>
   <p *ngIf="usuario && usuario.correo">Bienvenido, {{ usuario.correo }}</p>
   <div class="user-actions">
-    <span (click)="openCarritoModal()">
+    <span (click)="openCarritoModal()" class="icon-button">
       <i class="fas fa-shopping-cart"></i>
       {{ cantidadEnCarrito }}
     </span>
   </div>
+  <div class="nav-links">
+    <div *ngIf="loginstatus">
+      <button (click)="realizarAccion()" class="icon-button">
+        <i class="fas fa-file-invoice-dollar"></i>
+      </button>
+    </div>
+  </div>
   <div class="user-actions">
     <div class="nav-links">
-      <a *ngIf="!loginstatus" (click)="openLoginModal()">Iniciar sesión</a>
-      <a *ngIf="loginstatus" (click)="cerrarSesion()">Cerrar sesión</a>
+      <a class="iniciar" *ngIf="!loginstatus" (click)="openLoginModal()">Iniciar sesión</a>
+      <a class="cerra" *ngIf="loginstatus" (click)="cerrarSesion()">Cerrar sesión</a>
     </div>
-   
   </div>
 </nav>
