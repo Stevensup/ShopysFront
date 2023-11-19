@@ -3,9 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ConsultaProductosComponent } from './consulta-productos/consulta-productos.component';
 import { VentasComponent } from './ventas/ventas.component';
-import { ResumenCompraComponent } from './resumen-compra/resumen-compra.component';
 import { FacturacionComponent } from './facturacion/facturacion.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -26,9 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    ConsultaProductosComponent,
     VentasComponent,
-    ResumenCompraComponent,
     FacturacionComponent,
     LoginModalComponent,
     NavbarComponent,
