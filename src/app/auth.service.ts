@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import * as sha256 from 'sha256';
@@ -42,16 +42,17 @@ export class AuthService {
     console.log('Making login request to:', loginUrl);
 
     
-
     return this.http.post(loginUrl, requestBody).pipe(
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => {
         console.error('Error during login:', error);
         console.log('Full server response:', error.error); // Agrega esta línea
-        return throwError(
-          'Authentication failed. Please check your credentials.'
-        );
+        const errorMessage = error.error;
+
+        // Retorna el mensaje de error
+        return throwError(errorMessage);
       })
     );
+    
   }
 
   private hashPassword(password: string): string {
