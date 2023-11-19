@@ -73,6 +73,20 @@ export class AuthService {
         );
       })
     );
+  
+  }
+  getClienteDetails(): Observable<NuevoUsuario> {
+    const usuarioString = localStorage.getItem('usuario');
+
+    if (usuarioString) {
+      const usuario: NuevoUsuario = JSON.parse(usuarioString);
+
+      const url = `${this.apiUrl}/cliente/${usuario.id}`;
+      return this.http.get<NuevoUsuario>(url);
+    } else {
+      // Manejar el caso en que los datos del usuario no están disponibles en el localStorage
+      return throwError('Datos del usuario no disponibles');
+    }
   }
 
   cerrarSesion(): void {

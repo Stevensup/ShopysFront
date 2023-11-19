@@ -31,6 +31,7 @@ export class CarritoModalComponent {
     // Si estás utilizando MAT_DIALOG_DATA, asegúrate de inicializar productosCarrito
     // con los datos proporcionados por MAT_DIALOG_DATA.
     this.productosCarrito = data && data.productos ? data.productos : [];
+    formaPagoSeleccionada: this.formaPagoSeleccionada,
 
     // Calcular el total sin IVA y el IVA
     this.actualizarTotales();
@@ -44,7 +45,7 @@ export class CarritoModalComponent {
   }
 
   getTotal(): number {
-    return this.totalSinIva + this.iva;
+    return this.totalSinIva;
   }
 
   pagar(): void {
@@ -57,7 +58,12 @@ export class CarritoModalComponent {
     if (this.formaPagoSeleccionada != null) {
     if (isLogin) {
       console.log('sesion iniciada');
-      const dialogRef = this.dialog.open(FacturacionComponent, dialogConfig);
+      const dialogRef = this.dialog.open(FacturacionComponent, {
+        data: { productos: this.productosCarrito, formaPagoSeleccionada: this.formaPagoSeleccionada},
+        width: '400px',
+        height: 'auto',
+        panelClass: 'facturacion-modal-container',
+      });
       dialogRef.afterClosed().subscribe((result) => {
         console.log('El modal se cerró');
       });

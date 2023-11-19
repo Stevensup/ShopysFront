@@ -61,6 +61,8 @@ export class VentasComponent implements OnInit {
     this.carritoService.agregarProducto(producto);
   }
 
+
+
   aplicarFiltro(event: Event): void {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLowerCase();

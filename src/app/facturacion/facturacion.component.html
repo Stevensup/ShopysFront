@@ -1,5 +1,57 @@
-<div class="">
-  <p>Por favor, inicia sesión para continuar.</p>
-    
+<!-- FILEPATH: /Users/steven/Downloads/ShopysFront/src/app/facturacion/facturacion.component.html -->
+<!-- BEGIN: abpxx6d04wxr -->
+<div class="carrito-modal">
+  <h2>Factura</h2>
+  <div class="table-container">
+    <button mat-button (click)="closeDialog()">Cerrar</button>
+    <div *ngIf="clienteDetails">
+      <h2>Detalles del Cliente</h2>
+      <p><strong>Nombre:</strong> {{ clienteDetails.nombre }}</p>
+      <p><strong>Apellido:</strong> {{ clienteDetails.apellido }}</p>
+      <p><strong>Email:</strong> {{ clienteDetails.email }}</p>
+      <p><strong>Telefono:</strong> {{ clienteDetails.telefono }}</p>
+      <p><strong>Direccion:</strong> {{ clienteDetails.direccion }}</p>
+    </div>
+    <table *ngIf="productosCarrito.length > 0; else noProductos">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productosCarrito">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.precio | currency }}</td>
+          <td>{{ producto.cantidadInventario }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="errorMensaje" class="error-message">
+      {{ errorMensaje }}
+    </div>
+    <ng-template #noProductos>
+      <p>Factura Vacia</p>
+    </ng-template>
   </div>
+  
+  <div class="buttons-container">
+    <div class="totals">
+      <p>Total: {{ getTotal() | currency }} incluye el IVA !!</p>
+      <br>
+    </div>
+  
+    <div *ngIf="formaPagoSeleccionada">
+      <p>Forma de Pago Seleccionada: {{ formaPagoSeleccionada.nombre }}</p>
+    </div>
+      
+    <div class="form-group">
+      <button mat-button (click)="pagar()">Pagar</button>
+      <div *ngIf="errorMensaje" class="error-message">{{ errorMensaje }}</div>
+    </div>
+      
+  </div>
+</div>
+<!-- END: be15d9bcejpp -->
   
