@@ -32,6 +32,19 @@ export class NavbarComponent {
     });
   }
 
+  private actualizarEstadoUsuario() {
+    const userData = JSON.parse(localStorage.getItem('usuario') || '{}');
+    if (userData.message) {
+      // Extraer el correo electrónico del mensaje
+      const emailMatch = userData.message.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/);
+      this.usuario = { email: emailMatch ? emailMatch[0] : null };
+    } else {
+      this.usuario = null;
+    }
+    this.loginstatus = !!userData.message;
+    console.log(this.loginstatus);
+  }
+
   // Agrega el método para abrir el modal de inicio de sesión
   openLoginModal() {
     const dialogConfig = new MatDialogConfig();

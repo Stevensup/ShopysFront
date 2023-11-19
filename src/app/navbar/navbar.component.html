@@ -8,9 +8,7 @@
       <button (click)="realizarAccion()">Factura</button>
     </div>
   </div>
-  <p>
-    {{usuario && usuario.email}}
-  </p>
+  <p *ngIf="usuario && usuario.correo">Bienvenido, {{ usuario.correo }}</p>
   <div class="user-actions">
     <span (click)="openCarritoModal()">
       <i class="fas fa-shopping-cart"></i>
