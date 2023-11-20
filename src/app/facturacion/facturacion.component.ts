@@ -7,6 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http'; // Importa el HttpClient
 import { AuthService, NuevoUsuario } from '../auth.service';
 import { FacturacionService } from '../FacturacionService';
+import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 
 @Component({
   selector: 'app-facturacion',
@@ -23,6 +24,7 @@ export class FacturacionComponent implements OnInit{
   formasDePago: any[] = []; // Añade esta propiedad para almacenar las formas de pago
   formaPagoSeleccionada: any; // Añade esta propiedad para la forma de pago seleccionada
   clienteDetails: NuevoUsuario | null = null;
+  pagoid: number | undefined; // Añade esta propiedad
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -38,6 +40,7 @@ export class FacturacionComponent implements OnInit{
     this.obtenerFormasDePago();
     this.obtenerDetallesCliente();
   }
+
   ngOnInit(): void {
     this.obtenerDetallesCliente();
     this.obtenerFormasDePago();
@@ -52,10 +55,35 @@ export class FacturacionComponent implements OnInit{
     return this.totalSinIva + this.iva;
   }
 
+  
   pagar(): void {
-    this.facturacionService.completarTransaccion(this.productosCarrito)
-    .subscribe(
+    const fechaFacturacion = new Date().toISOString();
+    const valorCompra = this.productosCarrito.reduce((sum, producto) => sum + producto.precio, 0);
+    const valorIva = valorCompra * 0.19;
+    const totalFacturado = valorCompra + valorIva;
+    const clienteId = this.clienteDetails;
+    const formaPagoSeleccionada = this.formasDePago.find(fp => fp.id === parseInt(this.formaPagoSeleccionada));
+    const datosFactura = {
+      clienteId,
+      fechaFacturacion,
+      valorCompra,
+      valorIva,
+      totalFacturado,
+      formaPago: {
+        id: formaPagoSeleccionada.id,
+        nombre: formaPagoSeleccionada.nombre,
+        disponible: formaPagoSeleccionada.disponible,
+      }
+
+    };
+    console.log('Datos de la factura:', datosFactura);
+    console.log('Productos en el carrito:', this.productosCarrito);
+    forkJoin([
+      this.facturacionService.completarTransaccion(this.productosCarrito),
+      this.facturacionService.crearFactura(datosFactura)
+    ]).subscribe(
       () => {
+        console.log('Factura creada con éxito');
         this.mensajeExito = 'Compra realizada con éxito';
       },
       (error) => {
@@ -70,7 +98,7 @@ export class FacturacionComponent implements OnInit{
   
   }
   
-  
+
   
 
   
