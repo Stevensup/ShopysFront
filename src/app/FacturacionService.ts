@@ -7,6 +7,17 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class FacturacionService {
+
+
+       crearDetalleFactura(detallesFactura: any[]): Observable<any> {
+        const url = `${this.baseUrl}/detalles-factura/guardar`;
+        // Crear un objeto contenedor con un nombre apropiado, por ejemplo, 'detalles'
+        const body = { detalles: detallesFactura };
+        return this.http.post(url, body);
+        }
+
+
+
   private baseUrl = 'http://localhost:8080'; // Reemplaza con la URL de tu servidor
     facturaService: any;
 

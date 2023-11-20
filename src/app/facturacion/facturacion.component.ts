@@ -79,11 +79,59 @@ export class FacturacionComponent implements OnInit{
       }
 
     };
+
+    const idfactura = datosFactura.id;
+    const productoId = this.productosCarrito[0].id;
+    const nombreProducto = this.productosCarrito[0].nombre;
+    const descripcion = this.productosCarrito[0].descripcion;
+    const precio = this.productosCarrito[0].precio;
+    const cantidad = this.productosCarrito[0].cantidadInventario;
+    const categoria = this.productosCarrito[0].categoria;
+
+    const detalleFactura = {
+      id: idfactura || 0,
+      factura: {
+        id: idfactura || 0,
+    cliente: {
+        id: this.clienteDetails?.id || 0,
+        nombre: this.clienteDetails?.nombre || "string",
+        apellido: this.clienteDetails?.apellido || "string",
+        email: this.clienteDetails?.email || "string",
+        telefono: this.clienteDetails?.telefono || "string",
+        direccion: this.clienteDetails?.direccion || "string",
+        userPassword: this.clienteDetails?.userPassword || "string",
+        frecuente: this.clienteDetails?.frecuente || true,
+        fechaRegistro: this.clienteDetails?.fechaRegistro || "2023-11-20T05:44:54.952Z",
+        ctaBloqueada: this.clienteDetails?.ctaBloqueada || true,
+        intentosFallidos: this.clienteDetails?.intentosFallidos || 0,
+        },
+        fechaFacturacion,
+        valorCompra,
+        valorIva,
+        totalFacturado,
+        formaPago: {
+            id: formaPagoSeleccionada.id,
+          nombre: formaPagoSeleccionada.nombre,
+          disponible: formaPagoSeleccionada.disponible,
+        },
+      },
+      producto: {
+        id: productoId || 0,
+        nombre: nombreProducto || "string",
+        descripcion: descripcion || "string",
+        precio: precio || 0,
+        cantidad: cantidad || 0,
+        categoria: categoria || "string",
+      },
+        cantidad: cantidad || 0,
+        subtotalProducto: precio * cantidad || 0,  
+    };
     console.log('Datos de la factura:', datosFactura);
     console.log('Productos en el carrito:', this.productosCarrito);
     forkJoin([
       this.facturacionService.completarTransaccion(this.productosCarrito),
-      this.facturacionService.crearFactura(datosFactura)
+      this.facturacionService.crearFactura(datosFactura),
+      this.facturacionService.crearDetalleFactura(this.productosCarrito),
     ]).subscribe(
       () => {
         console.log('Factura creada con éxito');
