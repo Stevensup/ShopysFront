@@ -6,6 +6,7 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http'; // Importa el HttpClient
 import { AuthService, NuevoUsuario } from '../auth.service';
+import { FacturacionService } from '../FacturacionService';
 
 @Component({
   selector: 'app-facturacion',
@@ -17,6 +18,8 @@ export class FacturacionComponent implements OnInit{
   totalSinIva: number = 0;
   iva: number = 0;
   errorMensaje: string = '';
+  mensajeError: string = '';
+  mensajeExito: string = '';
   formasDePago: any[] = []; // Añade esta propiedad para almacenar las formas de pago
   formaPagoSeleccionada: any; // Añade esta propiedad para la forma de pago seleccionada
   clienteDetails: NuevoUsuario | null = null;
@@ -26,8 +29,8 @@ export class FacturacionComponent implements OnInit{
     public dialogRef: MatDialogRef<FacturacionComponent>,
     private http: HttpClient,
     public dialog: MatDialog,
-    public authService: AuthService
-    
+    public authService: AuthService,
+    private facturacionService: FacturacionService
   ) {
     this.productosCarrito = data && data.productos ? data.productos : [];
     this.formaPagoSeleccionada = data && data.formaPagoSeleccionada ? data.formaPagoSeleccionada : null;
@@ -50,9 +53,27 @@ export class FacturacionComponent implements OnInit{
   }
 
   pagar(): void {
-
+    this.facturacionService.completarTransaccion(this.productosCarrito)
+    .subscribe(
+      () => {
+        this.mensajeExito = 'Compra realizada con éxito';
+      },
+      (error) => {
+        if (error.status === 400) {
+          this.errorMensaje = error.error;
+        } else {
+          this.errorMensaje = 'Compra realizada con éxito';
+        }
+        alert(this.errorMensaje);
+      }
+    );
+  
   }
+  
+  
+  
 
+  
   confirmarEdicion(producto: any): void {
     // Validar si la cantidad ingresada es mayor que la cantidad en la base de datos
     if (producto.cantidadInventario > producto.cantidadDisponibleEnDB) {
