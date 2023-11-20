@@ -61,10 +61,13 @@ export class FacturacionComponent implements OnInit{
     const valorCompra = this.productosCarrito.reduce((sum, producto) => sum + producto.precio, 0);
     const valorIva = valorCompra * 0.19;
     const totalFacturado = valorCompra + valorIva;
-    const clienteId = this.clienteDetails;
+    const cliente = this.clienteDetails;
+    const id = this.clienteDetails?.id || 0;
+    console.log('Id del cliente:', id);
     const formaPagoSeleccionada = this.formasDePago.find(fp => fp.id === parseInt(this.formaPagoSeleccionada));
     const datosFactura = {
-      clienteId,
+      id,
+      cliente,
       fechaFacturacion,
       valorCompra,
       valorIva,
