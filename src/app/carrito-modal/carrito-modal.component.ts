@@ -73,6 +73,7 @@ export class CarritoModalComponent {
       });
       dialogRef.afterClosed().subscribe((result) => {
         console.log('El modal se cerró');
+        this.closeDialog();
       });
     } else {
       console.log('sesion no iniciada');

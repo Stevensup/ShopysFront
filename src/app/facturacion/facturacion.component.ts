@@ -91,6 +91,7 @@ export class FacturacionComponent implements OnInit {
         console.error('Error al enviar detalle de factura:', error);
       }
     );
+    this.closeDialog();
   }
 
   private construirDatosFactura( id: number, cliente: NuevoUsuario | null, fechaFacturacion: string, valorCompra: number, valorIva: number, totalFacturado: number, formaPagoSeleccionada: any): any {
