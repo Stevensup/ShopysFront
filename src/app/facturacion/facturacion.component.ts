@@ -68,18 +68,20 @@ export class FacturacionComponent implements OnInit {
     ]).subscribe(
       (response) => {
         const idFactura = response[1].id;
-        const detalleFactura = this.construirDetalleFactura(idFactura, fechaFacturacion, valorCompra, valorIva, totalFacturado, formaPagoSeleccionada);
-        this.facturacionService.crearDetalleFactura(detalleFactura).subscribe(
-          (response) => {
-            console.log('Detalle de factura creado con éxito');
-            this.mensajeExito = 'response 1';
-            console.log('Respuesta del servicio:', response);
-          },
-          (error) => {
-            this.manipularError(error);
-            console.error('error linea 77', error);
-          }
-        );
+        for (const producto of this.productosCarrito) {
+          const detalleFactura = this.construirDetalleFactura(idFactura, fechaFacturacion, valorCompra, valorIva, totalFacturado, formaPagoSeleccionada, producto);
+          this.facturacionService.crearDetalleFactura(detalleFactura).subscribe(
+            (response) => {
+              console.log('Detalle de factura creado con éxito');
+              this.mensajeExito = 'response 1';
+              console.log('Respuesta del servicio:', response);
+            },
+            (error) => {
+              this.manipularError(error);
+              console.error('error linea 77', error);
+            }
+          );
+        }
         console.log('Factura creada con éxito');
         this.mensajeExito = 'Compra realizada con éxito';
         console.log('Respuesta del servicio:', response);
@@ -91,7 +93,7 @@ export class FacturacionComponent implements OnInit {
     );
   }
 
-  private construirDatosFactura(id: number, cliente: NuevoUsuario | null, fechaFacturacion: string, valorCompra: number, valorIva: number, totalFacturado: number, formaPagoSeleccionada: any): any {
+  private construirDatosFactura( id: number, cliente: NuevoUsuario | null, fechaFacturacion: string, valorCompra: number, valorIva: number, totalFacturado: number, formaPagoSeleccionada: any): any {
     return {
       id,
       cliente,
@@ -107,8 +109,7 @@ export class FacturacionComponent implements OnInit {
     };
   }
 
-  private construirDetalleFactura(id: number, fechaFacturacion: string, valorCompra: number, valorIva: number, totalFacturado: number, formaPagoSeleccionada: any): any {
-    const producto = this.productosCarrito[0];
+  private construirDetalleFactura(id: number, fechaFacturacion: string, valorCompra: number, valorIva: number, totalFacturado: number, formaPagoSeleccionada: any , producto:any): any {
     const datosFactura = this.construirDatosFactura(id, this.clienteDetails, fechaFacturacion, valorCompra, valorIva, totalFacturado, formaPagoSeleccionada);
     console.log(id + "id");
     return {
