@@ -7,19 +7,13 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class FacturacionService {
-
-
-       crearDetalleFactura(detallesFactura: any[]): Observable<any> {
-        const url = `${this.baseUrl}/detalles-factura/guardar`;
-        // Crear un objeto contenedor con un nombre apropiado, por ejemplo, 'detalles'
-        const body = { detalles: detallesFactura };
-        return this.http.post(url, body);
-        }
-
-
+  crearDetalleFactura(detallesFactura: any[]): Observable<any> {
+    const url = `${this.baseUrl}/detalles-factura/guardar`;
+    return this.http.post(url, detallesFactura);
+  }
 
   private baseUrl = 'http://localhost:8080'; // Reemplaza con la URL de tu servidor
-    facturaService: any;
+  facturaService: any;
 
   constructor(private http: HttpClient) {}
 
@@ -34,7 +28,13 @@ export class FacturacionService {
       return this.actualizarInventario(producto.id, cantidadVendida).pipe(
         catchError((error) => {
           // Maneja el error según sea necesario y emite un observable con el error
-          console.error('Error al actualizar inventario para producto', producto.id, 'Cantidad vendida:', cantidadVendida, error);
+          console.error(
+            'Error al actualizar inventario para producto',
+            producto.id,
+            'Cantidad vendida:',
+            cantidadVendida,
+            error
+          );
           return throwError(error);
         })
       );
@@ -44,20 +44,19 @@ export class FacturacionService {
 
   private actualizarInventario(id: number, cantidadVendida: number) {
     const url = `${this.baseUrl}/producto/actualizar-inventario/${id}/${cantidadVendida}`;
-    return this.http.post(url, {});
+    const body = { id, cantidadVendida };
+    return this.http.post(url, body, { responseType: 'text' });
   }
-
 
   obtenerFormasDePago(): Observable<any[]> {
     const url = `${this.baseUrl}/FormaPago`;
 
-    return this.http.get<any[]>(url)
-      .pipe(
-        catchError((error) => {
-          console.error('Error al obtener formas de pago:', error);
-          return throwError(error);
-        })
-      );
+    return this.http.get<any[]>(url).pipe(
+      catchError((error) => {
+        console.error('Error al obtener formas de pago:', error);
+        return throwError(error);
+      })
+    );
   }
 
   obtenerIdFormaPagoPorNombre(nombre: string): Observable<number | undefined> {
