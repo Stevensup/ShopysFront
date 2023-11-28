@@ -1,60 +1,96 @@
+/**
+ * FILEPATH: /Users/steven/Downloads/ShopysFront/src/app/navbar/navbar.component.css
+ * 
+ * Styles for the navbar component.
+ */
+
 .navbar {
+  /* Background color of the navbar */
   background-color: #B3E5E5;
+  /* Text color of the navbar */
   color: #575252;
+  /* Padding around the navbar */
   padding: 10px;
+  /* Flexbox properties for alignment */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* Position fixed at the top left corner */
   position: fixed;
   top: 0;
   left: 0;
+  /* Full width of the viewport */
   width: 100%;
+  /* Box shadow for a subtle elevation effect */
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  /* Higher z-index to ensure it appears above other elements */
   z-index: 1000;
 }
 
 .logo a {
+  /* Remove underline from logo link */
   text-decoration: none;
+  /* Text color of the logo */
   color: white;
+  /* Font size of the logo */
   font-size: 1.5em;
+  /* Bold font weight for the logo */
   font-weight: bold;
 }
 
 .nav-links a {
+  /* Remove underline from navigation links */
   text-decoration: none;
+  /* Text color of the navigation links */
   color: #575252;
+  /* Margin between navigation links */
   margin: 0 15px;
 }
 
 .user-actions {
+  /* Flexbox properties for alignment */
   display: flex;
   align-items: center;
 }
 
 .user-actions a {
+  /* Remove underline from user action links */
   text-decoration: none;
+  /* Margin between user action links */
   margin-left: 15px;
 }
 
 .modal-container {
+  /* Flexbox properties for alignment */
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .icon-button {
+  /* Transparent background for icon button */
   background-color: transparent;
+  /* Remove border from icon button */
   border: none;
+  /* Cursor style for icon button */
   cursor: pointer;
+  /* Font size of the icon button */
   font-size: 1.5rem;
-  color: #333; /* Ajusta el color según tus preferencias */
+  /* Text color of the icon button */
+  color: #333;
+  /* Margin and padding of the icon button */
   margin: 0;
   padding: 0;
 }
 
 .icon-button:hover {
-  color: #ff8c00; /* Cambia el color al pasar el mouse según tus preferencias */
+  /* Text color of the icon button on hover */
+  color: #ff8c00;
+  /* Change color on hover according to your preference */
 }
 
-iniciar,cerrar {
+iniciar,
+cerrar {
+  /* Text color for iniciar and cerrar */
   color: black;
 }

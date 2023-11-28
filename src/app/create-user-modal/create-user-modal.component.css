@@ -1,3 +1,10 @@
+  /**
+   * Estilos para el componente createUserModal.
+   * 
+   * Este archivo contiene los estilos CSS para el componente createUserModal.
+   * Incluye estilos para oscurecer el fondo detrás del modal, posicionar el modal en el centro de la pantalla,
+   * y estilos para los elementos dentro del modal como formularios, etiquetas, inputs y botones.
+   */
   /* Agrega este estilo para oscurecer el fondo detrás del modal */
   .create-user-modal-container::before {
     content: "";

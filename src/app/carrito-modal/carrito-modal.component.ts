@@ -9,30 +9,60 @@ import { HttpClient } from '@angular/common/http'; // Importa el HttpClient
 import { FacturacionComponent } from '../facturacion/facturacion.component';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 
+/**
+ * Componente para el carrito de compras.
+ */
 @Component({
   selector: 'app-carrito-modal',
   templateUrl: './carrito-modal.component.html',
   styleUrls: ['./carrito-modal.component.css'],
 })
 export class CarritoModalComponent {
+  /**
+   * Lista de productos en el carrito.
+   */
   @Input() productosCarrito: any[] = [];
-  totalSinIva: number = 0;
-  iva: number = 0;
-  errorMensaje: string = '';
-  formasDePago: any[] = []; // Añade esta propiedad para almacenar las formas de pago
-  formaPagoSeleccionada: any; // Añade esta propiedad para la forma de pago seleccionada
 
+  /**
+   * Total sin IVA.
+   */
+  totalSinIva: number = 0;
+
+  /**
+   * Valor del IVA.
+   */
+  iva: number = 0;
+
+  /**
+   * Mensaje de error.
+   */
+  errorMensaje: string = '';
+
+  /**
+   * Lista de formas de pago disponibles.
+   */
+  formasDePago: any[] = [];
+
+  /**
+   * Forma de pago seleccionada.
+   */
+  formaPagoSeleccionada: any;
+
+  /**
+   * Constructor del componente.
+   * @param data Datos proporcionados por MAT_DIALOG_DATA.
+   * @param dialogRef Referencia al diálogo actual.
+   * @param http Cliente HTTP para realizar solicitudes.
+   * @param dialog Servicio de diálogo para abrir otros componentes modales.
+   */
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<CarritoModalComponent>,
     private http: HttpClient,
     public dialog: MatDialog
   ) {
-    // Si estás utilizando MAT_DIALOG_DATA, asegúrate de inicializar productosCarrito
-    // con los datos proporcionados por MAT_DIALOG_DATA.
     this.productosCarrito = data && data.productos ? data.productos : [];
-    formaPagoSeleccionada: this.formaPagoSeleccionada,
-
+formaPagoSeleccionada: this.formaPagoSeleccionada,
     // Calcular el total sin IVA y el IVA
     this.actualizarTotales();
 
@@ -40,16 +70,24 @@ export class CarritoModalComponent {
     this.obtenerFormasDePago();
   }
 
-  
-
+  /**
+   * Cierra el diálogo actual.
+   */
   closeDialog() {
     this.dialogRef.close();
   }
 
+  /**
+   * Obtiene el total sin IVA.
+   * @returns El total sin IVA.
+   */
   getTotal(): number {
     return this.totalSinIva;
   }
 
+  /**
+   * Realiza el pago.
+   */
   pagar(): void {
     console.log('Pago realizado. Total a pagar:', this.getTotal());
     const isLogin = localStorage.getItem('usuario');
@@ -58,41 +96,48 @@ export class CarritoModalComponent {
     dialogConfig.height = 'auto';
     dialogConfig.position = { top: '50%', left: '50%' };
     if (this.formaPagoSeleccionada != null) {
-    if (isLogin) {
-      console.log('sesion iniciada');
-      console.log('Forma de Pago seleccionada:', this.formaPagoSeleccionada);
-      console.log('Nombre de la forma de pago:', this.formaPagoSeleccionada.nombre);
-      const dialogRef = this.dialog.open(FacturacionComponent, {
-        data: { 
-          productos: this.productosCarrito, 
-          formaPagoSeleccionada: this.formaPagoSeleccionada 
-        },
-        width: '400px',
-        height: 'auto',
-        panelClass: 'facturacion-modal-container',
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        console.log('El modal se cerró');
-        this.closeDialog();
-      });
+      if (isLogin) {
+        console.log('sesion iniciada');
+        console.log('Forma de Pago seleccionada:', this.formaPagoSeleccionada);
+        console.log(
+          'Nombre de la forma de pago:',
+          this.formaPagoSeleccionada.nombre
+        );
+        const dialogRef = this.dialog.open(FacturacionComponent, {
+          data: {
+            productos: this.productosCarrito,
+            formaPagoSeleccionada: this.formaPagoSeleccionada,
+          },
+          width: '400px',
+          height: 'auto',
+          panelClass: 'facturacion-modal-container',
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log('El modal se cerró');
+          this.closeDialog();
+        });
+      } else {
+        console.log('sesion no iniciada');
+        const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log('El modal se cerró');
+        });
+      }
     } else {
-      console.log('sesion no iniciada');
-      const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
-      dialogRef.afterClosed().subscribe((result) => {
-        console.log('El modal se cerró');
-      });
-    } } else {
       this.errorMensaje = 'Seleccione una forma de pago';
     }
   }
 
+  /**
+   * Confirma la edición de un producto.
+   * @param producto Producto a editar.
+   */
   confirmarEdicion(producto: any): void {
     // Validar si la cantidad ingresada es mayor que la cantidad en la base de datos
     if (producto.cantidadInventario > producto.cantidadDisponibleEnDB) {
-      // Muestra un mensaje de error en lugar de la consola
       this.errorMensaje =
         'Error: La cantidad ingresada es mayor que la cantidad disponible en la base de datos.';
-      return; // Detén la ejecución aquí para evitar cambios no deseados
+      return;
     }
     this.errorMensaje = '';
 
@@ -102,6 +147,9 @@ export class CarritoModalComponent {
     this.actualizarTotales();
   }
 
+  /**
+   * Actualiza los totales.
+   */
   actualizarTotales(): void {
     this.totalSinIva = this.productosCarrito.reduce(
       (sum, producto) => sum + producto.precio * producto.cantidadInventario,
@@ -110,8 +158,11 @@ export class CarritoModalComponent {
     this.iva = this.totalSinIva * 0.19;
   }
 
+  /**
+   * Quita un producto del carrito.
+   * @param producto Producto a quitar.
+   */
   quitarProducto(producto: any): void {
-    // Elimina el producto del array de productos en el carrito
     const index = this.productosCarrito.indexOf(producto);
     if (index !== -1) {
       this.productosCarrito.splice(index, 1);
@@ -121,8 +172,10 @@ export class CarritoModalComponent {
     this.actualizarTotales();
   }
 
+  /**
+   * Obtiene las formas de pago disponibles.
+   */
   obtenerFormasDePago() {
-    // Realiza la solicitud HTTP para obtener las formas de pago
     this.http
       .get<any[]>('http://localhost:8081/FormaPago')
       .subscribe((data: any[]) => {
@@ -130,9 +183,10 @@ export class CarritoModalComponent {
       });
   }
 
+  /**
+   * Realiza acciones según la forma de pago seleccionada.
+   */
   seleccionarFormaPago() {
-    // Realiza acciones según la forma de pago seleccionada
-    // Por ejemplo, mostrar solo el nombre si está disponible
     if (this.formaPagoSeleccionada && this.formaPagoSeleccionada.disponible) {
       console.log(
         'Nombre de la forma de pago seleccionada:',

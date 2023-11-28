@@ -1,3 +1,12 @@
+/**
+ * Estilos para el componente de pie de página.
+ *
+ * @class .footer
+ * @description Define los estilos para el pie de página.
+ *
+ * @class .footer-content
+ * @description Define los estilos para el contenido del pie de página.
+ */
 .footer {
     background-color: #B3E5E5; /* Cambia esto según tu esquema de colores */
     color: #575252;

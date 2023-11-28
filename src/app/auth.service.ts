@@ -55,10 +55,14 @@ export class AuthService {
     
   }
 
+
+
   private hashPassword(password: string): string {
     // Implement your password hashing logic here (consider using a library like bcrypt)
     return sha256(password);
   }
+
+  
 
   registrarUsuario(usuario: NuevoUsuario): Observable<any> {
     // Puedes agregar lógica adicional si es necesario

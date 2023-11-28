@@ -21,6 +21,13 @@ import { CreateUserModalComponent } from './create-user-modal/create-user-modal.
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 
+/**
+ * The main module of the application.
+ * 
+ * @remarks
+ * This module is responsible for declaring and importing the necessary components, modules, and services used in the application.
+ * It also specifies the component to be bootstrapped when the application starts.
+ */
 @NgModule({
   declarations: [
     AppComponent,

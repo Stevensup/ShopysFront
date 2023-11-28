@@ -6,6 +6,9 @@ import { tap, finalize, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
+/**
+ * Componente para el modal de inicio de sesión.
+ */
 @Component({
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
@@ -13,15 +16,33 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginModalComponent implements OnInit {
 
+  /**
+   * Correo electrónico del usuario.
+   */
   email: string = '';
+
+  /**
+   * Contraseña del usuario.
+   */
   userPassword: string = '';
+
+  /**
+   * Mensaje de error.
+   */
   errorMessage: string = '';
+
+  /**
+   * Indicador de carga.
+   */
   isLoading: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<LoginModalComponent>, private dialog: MatDialog, private authService: AuthService) {}
 
   ngOnInit(): void {}
 
+  /**
+   * Abre el diálogo para crear un nuevo usuario.
+   */
   openCreateUserDialog() {
     this.dialogRef.close(); // Cerrar el modal actual antes de abrir el nuevo
     this.dialogRef = this.dialog.open(CreateUserModalComponent, {
@@ -31,6 +52,9 @@ export class LoginModalComponent implements OnInit {
     }) as MatDialogRef<any, any>;
   }
 
+  /**
+   * Realiza el inicio de sesión.
+   */
   login(): void {
     if (this.email && this.userPassword) {
       this.isLoading = true; // Activa el indicador de carga
@@ -66,6 +90,9 @@ export class LoginModalComponent implements OnInit {
     }
   }
 
+  /**
+   * Cierra el diálogo.
+   */
   closeDialog() {
     this.dialogRef.close();
   }

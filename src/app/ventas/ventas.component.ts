@@ -5,32 +5,57 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
+/**
+ * Componente de ventas.
+ */
 @Component({
   selector: 'app-ventas',
   templateUrl: './ventas.component.html',
   styleUrls: ['./ventas.component.css'],
 })
 export class VentasComponent implements OnInit {
+  /**
+   * Lista de productos.
+   */
   productos: any[] = [];
 
-  // Agregamos la propiedad dataSource con tipo MatTableDataSource<any>
+  /**
+   * Fuente de datos para la tabla.
+   */
   dataSource = new MatTableDataSource<any>([]);
 
-  // Agregamos la propiedad columnas
-  columnas: string[] = [ 'nombre', 'precio', 'descripcion', 'cantidad','categoria', 'agregarAlCarrito'];
+  /**
+   * Columnas de la tabla.
+   */
+  columnas: string[] = [
+    'nombre',
+    'precio',
+    'descripcion',
+    'cantidad',
+    'categoria',
+    'agregarAlCarrito',
+  ];
 
-  // Referencia al paginador
+  /**
+   * Referencia al paginador.
+   */
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort; // Agregado MatSort
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  constructor(private http: HttpClient, private carritoService: CarritoService) {}
+  constructor(
+    private http: HttpClient,
+    private carritoService: CarritoService
+  ) {}
 
+  /**
+   * Método que se ejecuta al inicializar el componente.
+   */
   ngOnInit() {
     this.http.get<any[]>('http://localhost:8081/producto/productos').subscribe(
       (data) => {
         this.productos = data;
-        this.dataSource.data = data; // Asignamos datos a la fuente de datos
-        this.dataSource.paginator = this.paginator; // Asignamos el paginador
+        this.dataSource.data = data;
+        this.dataSource.paginator = this.paginator;
       },
       (error) => {
         console.error('Error al cargar productos', error);
@@ -38,11 +63,19 @@ export class VentasComponent implements OnInit {
     );
   }
 
+  /**
+   * Método para editar la cantidad de un producto.
+   * @param producto El producto a editar.
+   */
   editarCantidad(producto: any): void {
     producto.editandoCantidad = true;
     producto.nuevaCantidad = producto.cantidadInventario;
   }
 
+  /**
+   * Método para actualizar la cantidad de un producto.
+   * @param producto El producto a actualizar.
+   */
   actualizarCantidad(producto: any): void {
     // Lógica para enviar la nueva cantidad a la base de datos
     // ... (tu código para actualizar la cantidad en la base de datos)
@@ -52,20 +85,29 @@ export class VentasComponent implements OnInit {
     producto.editandoCantidad = false;
   }
 
+  /**
+   * Método para cancelar la edición de la cantidad de un producto.
+   * @param producto El producto a cancelar la edición.
+   */
   cancelarEdicion(producto: any): void {
     producto.editandoCantidad = false;
   }
 
+  /**
+   * Método para agregar un producto al carrito.
+   * @param producto El producto a agregar al carrito.
+   */
   agregarAlCarrito(producto: any): void {
     console.log('Agregando al carrito:', producto);
     this.carritoService.agregarProducto(producto);
   }
 
-
-
+  /**
+   * Método para aplicar un filtro a la tabla.
+   * @param event El evento que desencadena el filtro.
+   */
   aplicarFiltro(event: Event): void {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLowerCase();
   }
-
 }

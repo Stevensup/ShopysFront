@@ -1,13 +1,21 @@
+/**
+ * CSS styles for the login-modal.component.css file.
+ * 
+ * FILEPATH: /Users/steven/Downloads/ShopysFront/src/app/login-modal/login-modal.component.css
+ */
+
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 /* CSS para centrar el modal */
 .modal-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; /* Esto asegura que el contenedor ocupe toda la altura de la pantalla */
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* Esto asegura que el contenedor ocupe toda la altura de la pantalla */
+}
 
-  /* Agrega este estilo para oscurecer el fondo detrás del modal */
+/* Agrega este estilo para oscurecer el fondo detrás del modal */
 .login-modal-container::before {
   content: "";
   position: fixed;
@@ -16,7 +24,8 @@
   width: 100%;
   height: 100%;
   background-color: #B3E5E5;
-  z-index: -1; /* Coloca el fondo detrás del contenido del modal */
+  z-index: -1;
+  /* Coloca el fondo detrás del contenido del modal */
 }
 
 .login-modal-container {
@@ -28,11 +37,13 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000; /* Asegura que el modal esté sobre el fondo oscurecido */
+  z-index: 1000;
+  /* Asegura que el modal esté sobre el fondo oscurecido */
 }
 
 h2 {
-  color: #004d40; /* Color para el encabezado */
+  color: #004d40;
+  /* Color para el encabezado */
   text-align: center;
 }
 
@@ -42,8 +53,9 @@ form {
   align-items: center;
 }
 
-
-name, pass, button {
+name,
+pass,
+button {
   color: #575252;
 }
 
@@ -52,7 +64,8 @@ input {
   padding: 10px;
   margin-top: 5px;
   box-sizing: border-box;
-  border: 1px solid #004d40; /* Bordes del campo de entrada */
+  border: 1px solid #004d40;
+  /* Bordes del campo de entrada */
   border-radius: 5px;
 }
 
@@ -66,19 +79,23 @@ button {
 }
 
 button:hover {
-  background-color: rgb(38, 101, 95); /* Color al pasar el ratón sobre el botón */
+  background-color: rgb(38, 101, 95);
+  /* Color al pasar el ratón sobre el botón */
 }
 
 .close-button {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 14px; /* Tamaño del texto */
-  color: #333; /* Color por defecto del botón */
+  font-size: 14px;
+  /* Tamaño del texto */
+  color: #333;
+  /* Color por defecto del botón */
 }
 
 .close-button:hover {
-  color: #004d40; /* Cambio de color al pasar el ratón sobre el botón */
+  color: #004d40;
+  /* Cambio de color al pasar el ratón sobre el botón */
 }
 
 .CreateUser {
@@ -90,9 +107,9 @@ button:hover {
   cursor: pointer;
   align-items: center;
   justify-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center; /* Agrega esta línea para centrar el botón */
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  /* Agrega esta línea para centrar el botón */
 }

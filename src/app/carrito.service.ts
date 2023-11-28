@@ -9,12 +9,6 @@ export class CarritoService {
   private productosEnCarrito: any[] = [];
   private carritoSubject = new BehaviorSubject<number>(0);
 
-  // agregarProducto(producto: any): void {
-  //   this.productosEnCarrito.push(producto);
-  //   this.carritoSubject.next(this.productosEnCarrito.length);
-  // }
-
-
   agregarProducto(producto: any): void {
     const encontrado = this.productosEnCarrito.findIndex(p => p.id === producto.id);
 

@@ -7,9 +7,8 @@ describe('CreateUserModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateUserModalComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateUserModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreateUserModalComponent);
     component = fixture.componentInstance;

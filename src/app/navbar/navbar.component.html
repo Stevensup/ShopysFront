@@ -1,3 +1,9 @@
+<!-- FILEPATH: /Users/steven/Downloads/ShopysFront/src/app/navbar/navbar.component.html -->
+<!-- 
+  This file represents the HTML template for the navbar component.
+  It contains the navigation bar with the logo, user information, shopping cart, and login/logout links.
+  The template uses Angular directives such as *ngIf and routerLink to conditionally display content and handle user actions.
+-->
 <!-- Navbar -->
 <nav class="navbar">
   <div class="logo">
@@ -19,8 +25,12 @@
   </div>
   <div class="user-actions">
     <div class="nav-links">
-      <a class="iniciar" *ngIf="!loginstatus" (click)="openLoginModal()">Iniciar sesión</a>
-      <a class="cerra" *ngIf="loginstatus" (click)="cerrarSesion()">Cerrar sesión</a>
+      <a class="iniciar" *ngIf="!loginstatus" (click)="openLoginModal()"
+        >Iniciar sesión</a
+      >
+      <a class="cerra" *ngIf="loginstatus" (click)="cerrarSesion()"
+        >Cerrar sesión</a
+      >
     </div>
   </div>
 </nav>

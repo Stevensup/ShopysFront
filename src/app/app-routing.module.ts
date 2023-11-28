@@ -6,6 +6,10 @@ import { VentasComponent } from './ventas/ventas.component';
 import { FacturacionComponent } from './facturacion/facturacion.component';
 import { LoginModalComponent } from './login-modal/login-modal.component';
 
+/**
+ * The routes configuration for the application.
+ * Each route maps a URL path to a component.
+ */
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'ventas', component: VentasComponent },

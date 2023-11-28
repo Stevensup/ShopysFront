@@ -1,3 +1,5 @@
+<!-- FILEPATH: /Users/steven/Downloads/ShopysFront/src/app/ventas/ventas.component.html -->
+<!-- This file represents the HTML template for the "Ventas" component. It displays a list of products with their details, such as name, price, description, quantity, category, and an option to add them to the shopping cart. The template includes a search input field, a table to display the products, and a paginator for pagination. It also includes a navbar and a footer component. -->
 <!-- Navbar -->
 <app-navbar></app-navbar>
 
@@ -26,49 +28,65 @@
     <ng-container matColumnDef="descripcion">
       <mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
       <mat-cell *matCellDef="let producto">
-        {{ producto.descripcion }}</mat-cell>
+        {{ producto.descripcion }}</mat-cell
+      >
     </ng-container>
-      <!-- Cantidad Column -->
-      <ng-container matColumnDef="cantidad">
-        <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
-        <mat-cell *matCellDef="let producto">
-          <div *ngIf="!producto.editandoCantidad">
-            {{ producto.cantidadInventario }}
-            <button mat-icon-button color="primary" (click)="editarCantidad(producto)">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </div>
-          <div *ngIf="producto.editandoCantidad">
-            <input type="number" [(ngModel)]="producto.nuevaCantidad" min="1" required>
-            <button mat-icon-button color="accent" (click)="actualizarCantidad(producto)">
-              <mat-icon>done</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="cancelarEdicion(producto)">
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </div>
-        </mat-cell>
-      </ng-container>
+    <!-- Cantidad Column -->
+    <ng-container matColumnDef="cantidad">
+      <mat-header-cell *matHeaderCellDef>Cantidad</mat-header-cell>
+      <mat-cell *matCellDef="let producto">
+        <div *ngIf="!producto.editandoCantidad">
+          {{ producto.cantidadInventario }}
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="editarCantidad(producto)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div *ngIf="producto.editandoCantidad">
+          <input
+            type="number"
+            [(ngModel)]="producto.nuevaCantidad"
+            min="1"
+            required
+          />
+          <button
+            mat-icon-button
+            color="accent"
+            (click)="actualizarCantidad(producto)"
+          >
+            <mat-icon>done</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="cancelarEdicion(producto)"
+          >
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </div>
+      </mat-cell>
+    </ng-container>
 
-
-         <!-- Categoría Column -->
+    <!-- Categoría Column -->
     <ng-container matColumnDef="categoria">
       <mat-header-cell *matHeaderCellDef>Categoría</mat-header-cell>
       <mat-cell *matCellDef="let producto">
         {{ producto.categoria }}
       </mat-cell>
     </ng-container>
-    
-<!-- Agregar al Carrito Column -->
-<ng-container matColumnDef="agregarAlCarrito">
-  <mat-header-cell *matHeaderCellDef>Agregar al carrito</mat-header-cell>
-  <mat-cell *matCellDef="let producto">
-    <button mat-button (click)="agregarAlCarrito(producto)">
-      <mat-icon>add_shopping_cart</mat-icon> 
-    </button>
-  </mat-cell>
-</ng-container>
 
+    <!-- Agregar al Carrito Column -->
+    <ng-container matColumnDef="agregarAlCarrito">
+      <mat-header-cell *matHeaderCellDef>Agregar al carrito</mat-header-cell>
+      <mat-cell *matCellDef="let producto">
+        <button mat-button (click)="agregarAlCarrito(producto)">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
     <mat-row *matRowDef="let row; columns: columnas"></mat-row>

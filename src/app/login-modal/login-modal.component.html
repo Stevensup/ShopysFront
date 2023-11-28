@@ -1,19 +1,40 @@
+<!-- FILEPATH: /Users/steven/Downloads/ShopysFront/src/app/login-modal/login-modal.component.html -->
+<!-- 
+  This file represents the HTML template for the login modal component.
+  It contains a form for user login, including input fields for username and password.
+  The form is submitted using the ngSubmit event and the login() method is called.
+  If there is an error during login, the errorMessage variable is displayed.
+  The isLoading variable is used to show a loading message while the login process is in progress.
+  There is also a button to create a new user.
+-->
 <!-- login-modal.component.html -->
 <div class="login-modal-container">
   <button class="close-button" mat-button (click)="closeDialog()">X</button>
   <h2>Login</h2>
   <form (ngSubmit)="login()">
     <label class="name" for="username">Nombre de usuario:</label>
-    <input type="text" id="username" name="username" [(ngModel)]="email" required>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      [(ngModel)]="email"
+      required
+    />
     <label class="pass" for="password">Contraseña:</label>
-    <input type="password" id="password" name="password" [(ngModel)]="userPassword" required>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      [(ngModel)]="userPassword"
+      required
+    />
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div *ngIf="isLoading">Cargando...</div>
     <button type="submit">Iniciar sesión</button>
   </form>
   <div class="CreateUser">
-    <button class="CreateUser" (click)="openCreateUserDialog()">Crear usuario</button>
+    <button class="CreateUser" (click)="openCreateUserDialog()">
+      Crear usuario
+    </button>
   </div>
-
-  
 </div>

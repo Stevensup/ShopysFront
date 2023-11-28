@@ -8,7 +8,7 @@
           <th>Nombre</th>
           <th>Precio</th>
           <th>Cantidad</th>
-          <th>Acciones</th> 
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -18,10 +18,18 @@
           <td>{{ producto.cantidadInventario }}</td>
           <td>
             <input type="number" [(ngModel)]="producto.cantidadInventario" />
-            <button mat-icon-button color="primary" (click)="confirmarEdicion(producto)">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="confirmarEdicion(producto)"
+            >
               <mat-icon>check</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="quitarProducto(producto)">
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="quitarProducto(producto)"
+            >
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -35,17 +43,23 @@
       <p>No hay productos en el carrito.</p>
     </ng-template>
   </div>
-  
-    <div class="payment-options">
-      <div class="form-group">
-        <label for="formaPago">Forma de Pago:</label>
-        <select id="formaPago" [(ngModel)]="formaPagoSeleccionada" (change)="seleccionarFormaPago()" required>
-          <option *ngFor="let formaPago of formasDePago" [value]="formaPago.id">{{ formaPago.nombre }}</option>
-        </select>
-        <button mat-button (click)="pagar()"> Ir a Pagar</button>
-        <p>Total: {{ getTotal() | currency }} No incluye el IVA !!</p>
-        <div *ngIf="errorMensaje" class="error-message">{{ errorMensaje }}</div>
-      </div>
+
+  <div class="payment-options">
+    <div class="form-group">
+      <label for="formaPago">Forma de Pago:</label>
+      <select
+        id="formaPago"
+        [(ngModel)]="formaPagoSeleccionada"
+        (change)="seleccionarFormaPago()"
+        required
+      >
+        <option *ngFor="let formaPago of formasDePago" [value]="formaPago.id">
+          {{ formaPago.nombre }}
+        </option>
+      </select>
+      <button mat-button (click)="pagar()">Ir a Pagar</button>
+      <p>Total: {{ getTotal() | currency }} No incluye el IVA !!</p>
+      <div *ngIf="errorMensaje" class="error-message">{{ errorMensaje }}</div>
     </div>
   </div>
-  
+</div>

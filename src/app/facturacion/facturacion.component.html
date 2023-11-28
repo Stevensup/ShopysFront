@@ -16,14 +16,13 @@
           <td><strong>Telefono:</strong> {{ clienteDetails.telefono }}</td>
         </tr>
         <tr>
-          <td colspan="2"><strong>Direccion:</strong> {{ clienteDetails.direccion }}</td>
+          <td colspan="2">
+            <strong>Direccion:</strong> {{ clienteDetails.direccion }}
+          </td>
         </tr>
       </table>
-      
     </div>
-    
-    
-    
+
     <table *ngIf="productosCarrito.length > 0; else noProductos">
       <thead>
         <tr>
@@ -44,7 +43,6 @@
       {{ errorMensaje }}
     </div>
 
-  
     <ng-template #noProductos>
       <p>Factura Vacia</p>
     </ng-template>
@@ -55,8 +53,6 @@
       <p>Total: {{ getTotal() | currency }} incluye el IVA !!</p>
       <br />
     </div>
-
-
 
     <div class="form-group">
       <button mat-button (click)="pagar()">Pagar</button>

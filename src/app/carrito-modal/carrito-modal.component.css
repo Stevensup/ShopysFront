@@ -1,123 +1,133 @@
 /* carrito-modal.component.css */
 
 .table-container {
-    background-color: white;
-    overflow: hidden; /* Asegura que el fondo blanco solo se aplique al contenedor de la tabla */
-    width: 700px;
+  background-color: white;
+  overflow: hidden;
+  /* Asegura que el fondo blanco solo se aplique al contenedor de la tabla */
+  width: 700px;
 
-  }
-  
-  .table-container table {
-    width: 100%;
-  }
-  
-  .table-container th, .table-container td {
-    padding: 10px;
-    text-align: left;
-  }
-  
-  /* Agrega este estilo para oscurecer el fondo detrás del modal */
-  .carrito-modal::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #B3E5E5;
-    z-index: -1; /* Coloca el fondo detrás del contenido del modal */
-  }
-  
-  .carrito-modal {
-    transform: translate(-50%, -50%);
-    position: fixed;
-    top: 30%;
-    left: 50%;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Asegura que el modal esté sobre el fondo oscurecido */
-  }
-  
-  /* Resto del estilo */
+}
 
-    /* Agrega este estilo para oscurecer el fondo detrás del modal */
-    .carrito-modal::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #B3E5E5;
-      z-index: -1; /* Coloca el fondo detrás del contenido del modal */
-    }
-    
-    .carrito-modal {
-      transform: translate(-50%, -50%);
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      background-color: #B3E5E5;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      z-index: 1000; /* Asegura que el modal esté sobre el fondo oscurecido */
-    }
-    
-  /* create-user-modal.component.css */
-  
-  .carrito-modal {
-      width: 800px;
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 10px;
-      background-color: #B3E5E5;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      display: flex;
-      flex-direction: column; /* Cambia la dirección a columna para apilar verticalmente */
-      align-items: center;
-    }
-    
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    label {
-      margin-top: 10px;
-    }
-    
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-    
-    button {
-      margin-top: 15px;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    button:hover {
-      background-color: #45a049;
-    }
-    
-    .buttons-container {
-      margin-top: 20px; /* Ajusta el margen superior según tus preferencias */
-      display: flex;
-      justify-content: flex-end; /* Coloca los botones al final del contenedor */
-    }
-    
-    .buttons-container button {
-      margin-left: 10px; /* Ajusta el espacio entre botones según tus preferencias */
-    }
+.table-container table {
+  width: 100%;
+}
+
+.table-container th,
+.table-container td {
+  padding: 10px;
+  text-align: left;
+}
+
+/* Agrega este estilo para oscurecer el fondo detrás del modal */
+.carrito-modal::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #B3E5E5;
+  z-index: -1;
+  /* Coloca el fondo detrás del contenido del modal */
+}
+
+.carrito-modal {
+  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  /* Asegura que el modal esté sobre el fondo oscurecido */
+}
+
+/* Resto del estilo */
+
+/* Agrega este estilo para oscurecer el fondo detrás del modal */
+.carrito-modal::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #B3E5E5;
+  z-index: -1;
+  /* Coloca el fondo detrás del contenido del modal */
+}
+
+.carrito-modal {
+  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: #B3E5E5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  /* Asegura que el modal esté sobre el fondo oscurecido */
+}
+
+/* create-user-modal.component.css */
+
+.carrito-modal {
+  width: 800px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+  background-color: #B3E5E5;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  /* Cambia la dirección a columna para apilar verticalmente */
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.buttons-container {
+  margin-top: 20px;
+  /* Ajusta el margen superior según tus preferencias */
+  display: flex;
+  justify-content: flex-end;
+  /* Coloca los botones al final del contenedor */
+}
+
+.buttons-container button {
+  margin-left: 10px;
+  /* Ajusta el espacio entre botones según tus preferencias */
+}
