@@ -9,23 +9,79 @@ import { AuthService, NuevoUsuario } from '../auth.service';
 import { FacturacionService } from '../FacturacionService';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { EmailService } from '../EmailService';
+/**
+ * Componente de facturación.
+ * 
+ * Este componente se encarga de gestionar la facturación de los productos en el carrito de compras.
+ * Permite realizar el pago, generar la factura, enviar el correo de confirmación y actualizar los totales.
+ */
 @Component({
   selector: 'app-facturacion',
   templateUrl: './facturacion.component.html',
   styleUrls: ['./facturacion.component.css'],
 })
 export class FacturacionComponent implements OnInit {
+  /**
+   * Lista de productos en el carrito de compras.
+   */
   @Input() productosCarrito: any[] = [];
+
+  /**
+   * Total sin IVA de los productos en el carrito.
+   */
   totalSinIva: number = 0;
+
+  /**
+   * Valor del IVA.
+   */
   iva: number = 0;
+
+  /**
+   * Mensaje de error.
+   */
   errorMensaje: string = '';
+
+  /**
+   * Mensaje de error.
+   */
   mensajeError: string = '';
+
+  /**
+   * Mensaje de éxito.
+   */
   mensajeExito: string = '';
+
+  /**
+   * Lista de formas de pago disponibles.
+   */
   formasDePago: any[] = [];
+
+  /**
+   * Forma de pago seleccionada.
+   */
   formaPagoSeleccionada: any;
+
+  /**
+   * Detalles del cliente.
+   */
   clienteDetails: NuevoUsuario | null = null;
+
+  /**
+   * ID de pago.
+   */
   pagoid: number | undefined;
 
+  /**
+   * Constructor del componente.
+   * 
+   * @param data Datos del componente.
+   * @param dialogRef Referencia al diálogo.
+   * @param http Cliente HTTP para realizar solicitudes.
+   * @param dialog Servicio de diálogo.
+   * @param authService Servicio de autenticación.
+   * @param facturacionService Servicio de facturación.
+   * @param EmailService Servicio de correo electrónico.
+   */
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<FacturacionComponent>,
@@ -44,20 +100,34 @@ export class FacturacionComponent implements OnInit {
     this.obtenerDetallesCliente();
   }
 
+  /**
+   * Método que se ejecuta al inicializar el componente.
+   */
   ngOnInit(): void {
     this.obtenerDetallesCliente();
     this.obtenerFormasDePago();
     this.actualizarTotales();
   }
 
+  /**
+   * Cierra el diálogo.
+   */
   closeDialog(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * Obtiene el total de la compra.
+   * 
+   * @returns El total de la compra.
+   */
   getTotal(): number {
     return this.totalSinIva + this.iva;
   }
 
+  /**
+   * Realiza el pago de la compra.
+   */
   pagar(): void {
     const fechaFacturacion = new Date().toISOString();
     const valorCompra = this.productosCarrito.reduce(
@@ -122,17 +192,17 @@ export class FacturacionComponent implements OnInit {
           direccionEntrega,
           fecha
         );
-       this.facturacionService.crearDomicilio(detalleDomiclio).subscribe(
-        (response) => {
-          console.log('Detalle de domicilio creado con éxito');
-          this.mensajeExito = 'response 1';
-          console.log('Respuesta del servicio:', response);
-        },
-        (error) => {
-          this.manipularError(error);
-          console.error('error linea 77', error);
-        }
-       );
+        this.facturacionService.crearDomicilio(detalleDomiclio).subscribe(
+          (response) => {
+            console.log('Detalle de domicilio creado con éxito');
+            this.mensajeExito = 'response 1';
+            console.log('Respuesta del servicio:', response);
+          },
+          (error) => {
+            this.manipularError(error);
+            console.error('error linea 77', error);
+          }
+        );
 
         // Envía el correo al cliente
         this.EmailService.enviarCorreo(
@@ -159,6 +229,18 @@ export class FacturacionComponent implements OnInit {
     this.closeDialog();
   }
 
+  /**
+   * Construye los datos de la factura.
+   * 
+   * @param id ID de la factura.
+   * @param cliente Detalles del cliente.
+   * @param fechaFacturacion Fecha de facturación.
+   * @param valorCompra Valor de la compra.
+   * @param valorIva Valor del IVA.
+   * @param totalFacturado Total facturado.
+   * @param formaPagoSeleccionada Forma de pago seleccionada.
+   * @returns Los datos de la factura.
+   */
   private construirDatosFactura(
     id: number,
     cliente: NuevoUsuario | null,
@@ -182,6 +264,16 @@ export class FacturacionComponent implements OnInit {
       },
     };
   }
+
+  /**
+   * Construye los datos del domicilio.
+   * 
+   * @param id ID del domicilio.
+   * @param cliente ID del cliente.
+   * @param direccionEntrega Dirección de entrega.
+   * @param fecha Fecha del domicilio.
+   * @returns Los datos del domicilio.
+   */
   private construirDomicilio(
     id = 0,
     cliente: number,
@@ -196,6 +288,18 @@ export class FacturacionComponent implements OnInit {
     };
   }
 
+  /**
+   * Construye los detalles de la factura.
+   * 
+   * @param id ID de la factura.
+   * @param fechaFacturacion Fecha de facturación.
+   * @param valorCompra Valor de la compra.
+   * @param valorIva Valor del IVA.
+   * @param totalFacturado Total facturado.
+   * @param formaPagoSeleccionada Forma de pago seleccionada.
+   * @param producto Producto.
+   * @returns Los detalles de la factura.
+   */
   private construirDetalleFactura(
     id: number,
     fechaFacturacion: string,
@@ -239,6 +343,11 @@ export class FacturacionComponent implements OnInit {
     };
   }
 
+  /**
+   * Maneja el error.
+   * 
+   * @param error Error.
+   */
   private manipularError(error: any): void {
     if (error.status === 400) {
       this.errorMensaje = error.error;
@@ -249,6 +358,11 @@ export class FacturacionComponent implements OnInit {
     alert(this.errorMensaje);
   }
 
+  /**
+   * Confirma la edición de un producto.
+   * 
+   * @param producto Producto a editar.
+   */
   confirmarEdicion(producto: any): void {
     // Validar si la cantidad ingresada es mayor que la cantidad en la base de datos
     if (producto.cantidadInventario > producto.cantidadDisponibleEnDB) {
@@ -265,6 +379,9 @@ export class FacturacionComponent implements OnInit {
     this.actualizarTotales();
   }
 
+  /**
+   * Actualiza los totales.
+   */
   actualizarTotales(): void {
     this.totalSinIva = this.productosCarrito.reduce(
       (sum, producto) => sum + producto.precio * producto.cantidadInventario,
@@ -273,8 +390,11 @@ export class FacturacionComponent implements OnInit {
     this.iva = this.totalSinIva * 0.19;
   }
 
-
-
+  /**
+   * Quita un producto del carrito.
+   * 
+   * @param producto Producto a quitar.
+   */
   quitarProducto(producto: any): void {
     // Elimina el producto del array de productos en el carrito
     const index = this.productosCarrito.indexOf(producto);
@@ -286,6 +406,9 @@ export class FacturacionComponent implements OnInit {
     this.actualizarTotales();
   }
 
+  /**
+   * Obtiene las formas de pago disponibles.
+   */
   obtenerFormasDePago(): void {
     // Realiza la solicitud HTTP para obtener las formas de pago
     this.http
@@ -295,6 +418,9 @@ export class FacturacionComponent implements OnInit {
       });
   }
 
+  /**
+   * Selecciona una forma de pago.
+   */
   seleccionarFormaPago(): void {
     // Obtener el objeto completo de la forma de pago seleccionada
     this.formaPagoSeleccionada = this.formasDePago.find(
@@ -311,6 +437,9 @@ export class FacturacionComponent implements OnInit {
     }
   }
 
+  /**
+   * Obtiene los detalles del cliente.
+   */
   obtenerDetallesCliente(): void {
     this.authService.getClienteDetails().subscribe(
       (data) => {
@@ -324,6 +453,12 @@ export class FacturacionComponent implements OnInit {
     );
   }
 
+  /**
+   * Construye el cuerpo del correo electrónico.
+   * 
+   * @param productos Productos en el carrito.
+   * @returns El cuerpo del correo electrónico.
+   */
   private construirCuerpoCorreo(productos: any[]): string {
     // Construye el cuerpo del correo con la información de los productos
     let cuerpo = 'Detalles de la compra:\n';
