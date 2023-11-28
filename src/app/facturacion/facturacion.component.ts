@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService, NuevoUsuario } from '../auth.service';
 import { FacturacionService } from '../FacturacionService';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
-
+import { EmailService } from '../EmailService';
 @Component({
   selector: 'app-facturacion',
   templateUrl: './facturacion.component.html',
@@ -28,10 +28,13 @@ export class FacturacionComponent implements OnInit {
     private http: HttpClient,
     public dialog: MatDialog,
     public authService: AuthService,
-    private facturacionService: FacturacionService
+    private facturacionService: FacturacionService,
+    private EmailService: EmailService
+    
   ) {
     this.productosCarrito = data && data.productos ? data.productos : [];
     this.formaPagoSeleccionada = data && data.formaPagoSeleccionada ? data.formaPagoSeleccionada : null;
+    
     this.actualizarTotales();
     this.obtenerFormasDePago();
     this.obtenerDetallesCliente();
@@ -61,7 +64,7 @@ export class FacturacionComponent implements OnInit {
     console.log('Id del cliente:', id);
     const formaPagoSeleccionada = this.formasDePago.find(fp => fp.id === parseInt(this.formaPagoSeleccionada));
     const datosFactura = this.construirDatosFactura(id, cliente, fechaFacturacion, valorCompra, valorIva, totalFacturado, formaPagoSeleccionada);
-
+    const cuerpoCorreo = this.construirCuerpoCorreo(this.productosCarrito);
     forkJoin([
       this.facturacionService.completarTransaccion(this.productosCarrito),
       this.facturacionService.crearFactura(datosFactura),
@@ -82,6 +85,19 @@ export class FacturacionComponent implements OnInit {
             }
           );
         }
+
+
+          // Envía el correo al cliente
+      this.EmailService.enviarCorreo(this.clienteDetails?.email || '', 'Compra realizada con éxito', cuerpoCorreo).subscribe(
+        (emailResponse: any) => {
+          console.log('Correo enviado con éxito', emailResponse);
+        },
+        (emailError: any) => {
+          console.error('Error al enviar el correo', emailError);
+        }
+      );
+
+        
         console.log('Factura creada con éxito');
         this.mensajeExito = 'Compra realizada con éxito';
         console.log('Respuesta del servicio:', response);
@@ -213,5 +229,16 @@ export class FacturacionComponent implements OnInit {
         // Maneja el error según tus necesidades
       }
     );
+  }
+
+  private construirCuerpoCorreo(productos: any[]): string {
+    // Construye el cuerpo del correo con la información de los productos
+    let cuerpo = 'Detalles de la compra:\n';
+
+    for (const producto of productos) {
+      cuerpo += `\nNombre: ${producto.nombre}\nDescripción: ${producto.descripcion}\nPrecio: ${producto.precio}\nCantidad: ${producto.cantidadInventario}\n`;
+    }
+
+    return cuerpo;
   }
 }
