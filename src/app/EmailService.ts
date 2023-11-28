@@ -7,7 +7,7 @@ import { Observable, catchError } from 'rxjs';
 })
 export class EmailService {
 
-  private correoEndpoint = 'http://localhost:8080/correo/enviar';
+  private correoEndpoint = 'http://localhost:8081/correo/enviar';
 
   constructor(private http: HttpClient) { }
 

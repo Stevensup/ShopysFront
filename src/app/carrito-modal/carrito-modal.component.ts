@@ -124,7 +124,7 @@ export class CarritoModalComponent {
   obtenerFormasDePago() {
     // Realiza la solicitud HTTP para obtener las formas de pago
     this.http
-      .get<any[]>('http://localhost:8080/FormaPago')
+      .get<any[]>('http://localhost:8081/FormaPago')
       .subscribe((data: any[]) => {
         this.formasDePago = data;
       });

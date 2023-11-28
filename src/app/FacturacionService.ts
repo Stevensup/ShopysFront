@@ -12,7 +12,7 @@ export class FacturacionService {
     return this.http.post(url, detallesFactura);
   }
 
-  private baseUrl = 'http://localhost:8080'; // Reemplaza con la URL de tu servidor
+  private baseUrl = 'http://localhost:8081'; // Reemplaza con la URL de tu servidor
   facturaService: any;
 
   constructor(private http: HttpClient) {}
@@ -20,6 +20,11 @@ export class FacturacionService {
   crearFactura(datosFactura: any): Observable<any> {
     const url = `${this.baseUrl}/facturas/crear-factura`;
     return this.http.post(url, datosFactura);
+  }
+
+  crearDomicilio(detalleDomiclio: any): Observable<any> {
+    const url = `${this.baseUrl}/domicilios`;
+    return this.http.post(url, detalleDomiclio);
   }
 
   completarTransaccion(productosCarrito: any[]): Observable<any> {

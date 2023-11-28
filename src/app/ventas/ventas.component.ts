@@ -26,7 +26,7 @@ export class VentasComponent implements OnInit {
   constructor(private http: HttpClient, private carritoService: CarritoService) {}
 
   ngOnInit() {
-    this.http.get<any[]>('http://localhost:8080/producto/productos').subscribe(
+    this.http.get<any[]>('http://localhost:8081/producto/productos').subscribe(
       (data) => {
         this.productos = data;
         this.dataSource.data = data; // Asignamos datos a la fuente de datos

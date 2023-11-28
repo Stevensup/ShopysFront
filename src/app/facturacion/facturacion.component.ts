@@ -1,5 +1,9 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { AuthService, NuevoUsuario } from '../auth.service';
 import { FacturacionService } from '../FacturacionService';
@@ -8,7 +12,7 @@ import { EmailService } from '../EmailService';
 @Component({
   selector: 'app-facturacion',
   templateUrl: './facturacion.component.html',
-  styleUrls: ['./facturacion.component.css']
+  styleUrls: ['./facturacion.component.css'],
 })
 export class FacturacionComponent implements OnInit {
   @Input() productosCarrito: any[] = [];
@@ -30,11 +34,11 @@ export class FacturacionComponent implements OnInit {
     public authService: AuthService,
     private facturacionService: FacturacionService,
     private EmailService: EmailService
-    
   ) {
     this.productosCarrito = data && data.productos ? data.productos : [];
-    this.formaPagoSeleccionada = data && data.formaPagoSeleccionada ? data.formaPagoSeleccionada : null;
-    
+    this.formaPagoSeleccionada =
+      data && data.formaPagoSeleccionada ? data.formaPagoSeleccionada : null;
+
     this.actualizarTotales();
     this.obtenerFormasDePago();
     this.obtenerDetallesCliente();
@@ -56,14 +60,33 @@ export class FacturacionComponent implements OnInit {
 
   pagar(): void {
     const fechaFacturacion = new Date().toISOString();
-    const valorCompra = this.productosCarrito.reduce((sum, producto) => sum + producto.precio, 0);
+    const valorCompra = this.productosCarrito.reduce(
+      (sum, producto) => sum + producto.precio,
+      0
+    );
+
     const valorIva = valorCompra * 0.19;
     const totalFacturado = valorCompra + valorIva;
     const cliente = this.clienteDetails;
     const id = this.clienteDetails?.id || 0;
-    console.log('Id del cliente:', id);
-    const formaPagoSeleccionada = this.formasDePago.find(fp => fp.id === parseInt(this.formaPagoSeleccionada));
-    const datosFactura = this.construirDatosFactura(id, cliente, fechaFacturacion, valorCompra, valorIva, totalFacturado, formaPagoSeleccionada);
+    const email = this.clienteDetails?.email || '';
+    const direccionEntrega = this.clienteDetails?.direccion || '';
+    const telefono = this.clienteDetails?.telefono || '';
+    const fecha = new Date().toISOString();
+    const clienteid = this.clienteDetails?.id || 0;
+    const idnull = 0;
+    const formaPagoSeleccionada = this.formasDePago.find(
+      (fp) => fp.id === parseInt(this.formaPagoSeleccionada)
+    );
+    const datosFactura = this.construirDatosFactura(
+      id,
+      cliente,
+      fechaFacturacion,
+      valorCompra,
+      valorIva,
+      totalFacturado,
+      formaPagoSeleccionada
+    );
     const cuerpoCorreo = this.construirCuerpoCorreo(this.productosCarrito);
     forkJoin([
       this.facturacionService.completarTransaccion(this.productosCarrito),
@@ -72,7 +95,15 @@ export class FacturacionComponent implements OnInit {
       (response) => {
         const idFactura = response[1].id;
         for (const producto of this.productosCarrito) {
-          const detalleFactura = this.construirDetalleFactura(idFactura, fechaFacturacion, valorCompra, valorIva, totalFacturado, formaPagoSeleccionada, producto);
+          const detalleFactura = this.construirDetalleFactura(
+            idFactura,
+            fechaFacturacion,
+            valorCompra,
+            valorIva,
+            totalFacturado,
+            formaPagoSeleccionada,
+            producto
+          );
           this.facturacionService.crearDetalleFactura(detalleFactura).subscribe(
             (response) => {
               console.log('Detalle de factura creado con éxito');
@@ -85,19 +116,37 @@ export class FacturacionComponent implements OnInit {
             }
           );
         }
-
-
-          // Envía el correo al cliente
-      this.EmailService.enviarCorreo(this.clienteDetails?.email || '', 'Compra realizada con éxito', cuerpoCorreo).subscribe(
-        (emailResponse: any) => {
-          console.log('Correo enviado con éxito', emailResponse);
+        const detalleDomiclio = this.construirDomicilio(
+          idnull,
+          cliente?.id || 0,
+          direccionEntrega,
+          fecha
+        );
+       this.facturacionService.crearDomicilio(detalleDomiclio).subscribe(
+        (response) => {
+          console.log('Detalle de domicilio creado con éxito');
+          this.mensajeExito = 'response 1';
+          console.log('Respuesta del servicio:', response);
         },
-        (emailError: any) => {
-          console.error('Error al enviar el correo', emailError);
+        (error) => {
+          this.manipularError(error);
+          console.error('error linea 77', error);
         }
-      );
+       );
 
-        
+        // Envía el correo al cliente
+        this.EmailService.enviarCorreo(
+          this.clienteDetails?.email || '',
+          'Compra realizada con éxito',
+          cuerpoCorreo
+        ).subscribe(
+          (emailResponse: any) => {
+            console.log('Correo enviado con éxito', emailResponse);
+          },
+          (emailError: any) => {
+            console.error('Error al enviar el correo', emailError);
+          }
+        );
         console.log('Factura creada con éxito');
         this.mensajeExito = 'Compra realizada con éxito';
         console.log('Respuesta del servicio:', response);
@@ -110,7 +159,15 @@ export class FacturacionComponent implements OnInit {
     this.closeDialog();
   }
 
-  private construirDatosFactura( id: number, cliente: NuevoUsuario | null, fechaFacturacion: string, valorCompra: number, valorIva: number, totalFacturado: number, formaPagoSeleccionada: any): any {
+  private construirDatosFactura(
+    id: number,
+    cliente: NuevoUsuario | null,
+    fechaFacturacion: string,
+    valorCompra: number,
+    valorIva: number,
+    totalFacturado: number,
+    formaPagoSeleccionada: any
+  ): any {
     return {
       id,
       cliente,
@@ -122,13 +179,42 @@ export class FacturacionComponent implements OnInit {
         id: formaPagoSeleccionada.id,
         nombre: formaPagoSeleccionada.nombre,
         disponible: formaPagoSeleccionada.disponible,
-      }
+      },
+    };
+  }
+  private construirDomicilio(
+    id = 0,
+    cliente: number,
+    direccionEntrega: string,
+    fecha: string
+  ): any {
+    return {
+      id,
+      cliente,
+      direccionEntrega,
+      fecha,
     };
   }
 
-  private construirDetalleFactura(id: number, fechaFacturacion: string, valorCompra: number, valorIva: number, totalFacturado: number, formaPagoSeleccionada: any , producto:any): any {
-    const datosFactura = this.construirDatosFactura(id, this.clienteDetails, fechaFacturacion, valorCompra, valorIva, totalFacturado, formaPagoSeleccionada);
-    console.log(id + "id");
+  private construirDetalleFactura(
+    id: number,
+    fechaFacturacion: string,
+    valorCompra: number,
+    valorIva: number,
+    totalFacturado: number,
+    formaPagoSeleccionada: any,
+    producto: any
+  ): any {
+    const datosFactura = this.construirDatosFactura(
+      id,
+      this.clienteDetails,
+      fechaFacturacion,
+      valorCompra,
+      valorIva,
+      totalFacturado,
+      formaPagoSeleccionada
+    );
+    console.log(id + 'id');
     return {
       id,
       factura: {
@@ -187,6 +273,8 @@ export class FacturacionComponent implements OnInit {
     this.iva = this.totalSinIva * 0.19;
   }
 
+
+
   quitarProducto(producto: any): void {
     // Elimina el producto del array de productos en el carrito
     const index = this.productosCarrito.indexOf(producto);
@@ -201,7 +289,7 @@ export class FacturacionComponent implements OnInit {
   obtenerFormasDePago(): void {
     // Realiza la solicitud HTTP para obtener las formas de pago
     this.http
-      .get<any[]>('http://localhost:8080/FormaPago')
+      .get<any[]>('http://localhost:8081/FormaPago')
       .subscribe((data: any[]) => {
         this.formasDePago = data;
       });
@@ -209,22 +297,27 @@ export class FacturacionComponent implements OnInit {
 
   seleccionarFormaPago(): void {
     // Obtener el objeto completo de la forma de pago seleccionada
-    this.formaPagoSeleccionada = this.formasDePago.find(fp => fp.id === parseInt(this.formaPagoSeleccionada));
+    this.formaPagoSeleccionada = this.formasDePago.find(
+      (fp) => fp.id === parseInt(this.formaPagoSeleccionada)
+    );
 
     // Puedes realizar otras acciones según la forma de pago seleccionada
     // Por ejemplo, mostrar solo el nombre si está disponible
     if (this.formaPagoSeleccionada && this.formaPagoSeleccionada.disponible) {
-      console.log('Nombre de la forma de pago seleccionada:', this.formaPagoSeleccionada.nombre);
+      console.log(
+        'Nombre de la forma de pago seleccionada:',
+        this.formaPagoSeleccionada.nombre
+      );
     }
   }
 
   obtenerDetallesCliente(): void {
     this.authService.getClienteDetails().subscribe(
-      data => {
+      (data) => {
         this.clienteDetails = data;
         console.log('Detalles del cliente:', this.clienteDetails);
       },
-      error => {
+      (error) => {
         console.error('Error al obtener detalles del cliente:', error);
         // Maneja el error según tus necesidades
       }
