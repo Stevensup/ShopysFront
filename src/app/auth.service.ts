@@ -22,7 +22,7 @@ export interface NuevoUsuario {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8081';
+  private apiUrl = 'http://localhost:8090';
   private isLoggedInVar: boolean = false;
 
   constructor(private http: HttpClient) {}

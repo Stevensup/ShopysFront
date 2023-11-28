@@ -412,7 +412,7 @@ export class FacturacionComponent implements OnInit {
   obtenerFormasDePago(): void {
     // Realiza la solicitud HTTP para obtener las formas de pago
     this.http
-      .get<any[]>('http://localhost:8081/FormaPago')
+      .get<any[]>('http://localhost:8090/FormaPago')
       .subscribe((data: any[]) => {
         this.formasDePago = data;
       });

@@ -177,7 +177,7 @@ formaPagoSeleccionada: this.formaPagoSeleccionada,
    */
   obtenerFormasDePago() {
     this.http
-      .get<any[]>('http://localhost:8081/FormaPago')
+      .get<any[]>('http://localhost:8090/FormaPago')
       .subscribe((data: any[]) => {
         this.formasDePago = data;
       });

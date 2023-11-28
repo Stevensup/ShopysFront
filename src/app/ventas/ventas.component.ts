@@ -51,7 +51,7 @@ export class VentasComponent implements OnInit {
    * Método que se ejecuta al inicializar el componente.
    */
   ngOnInit() {
-    this.http.get<any[]>('http://localhost:8081/producto/productos').subscribe(
+    this.http.get<any[]>('http://localhost:8090/producto/productos').subscribe(
       (data) => {
         this.productos = data;
         this.dataSource.data = data;

@@ -20,7 +20,7 @@ export class FacturacionService {
     return this.http.post(url, detallesFactura);
   }
 
-  private baseUrl = 'http://localhost:8081'; // Reemplaza con la URL de tu servidor
+  private baseUrl = 'http://localhost:8090'; // Reemplaza con la URL de tu servidor
   facturaService: any;
 
   constructor(private http: HttpClient) {}
