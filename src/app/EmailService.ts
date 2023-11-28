@@ -23,7 +23,6 @@ export class EmailService {
       asunto: asunto,
       cuerpo: cuerpo
     };
-    console.log(body)
     return this.http.post<any>(this.correoEndpoint, body, options).pipe(
       catchError((error: any) => {
         console.error('Error al enviar el correo:', error);

@@ -176,13 +176,10 @@ export class FacturacionComponent implements OnInit {
           );
           this.facturacionService.crearDetalleFactura(detalleFactura).subscribe(
             (response) => {
-              console.log('Detalle de factura creado con éxito');
               this.mensajeExito = 'response 1';
-              console.log('Respuesta del servicio:', response);
             },
             (error) => {
               this.manipularError(error);
-              console.error('error linea 77', error);
             }
           );
         }
@@ -194,9 +191,7 @@ export class FacturacionComponent implements OnInit {
         );
         this.facturacionService.crearDomicilio(detalleDomiclio).subscribe(
           (response) => {
-            console.log('Detalle de domicilio creado con éxito');
             this.mensajeExito = 'response 1';
-            console.log('Respuesta del servicio:', response);
           },
           (error) => {
             this.manipularError(error);
@@ -211,15 +206,13 @@ export class FacturacionComponent implements OnInit {
           cuerpoCorreo
         ).subscribe(
           (emailResponse: any) => {
-            console.log('Correo enviado con éxito', emailResponse);
+            console.error('Correo enviado con éxito', emailResponse);
           },
           (emailError: any) => {
             console.error('Error al enviar el correo', emailError);
           }
         );
-        console.log('Factura creada con éxito');
         this.mensajeExito = 'Compra realizada con éxito';
-        console.log('Respuesta del servicio:', response);
       },
       (error) => {
         this.manipularError(error);
@@ -318,7 +311,6 @@ export class FacturacionComponent implements OnInit {
       totalFacturado,
       formaPagoSeleccionada
     );
-    console.log(id + 'id');
     return {
       id,
       factura: {
@@ -444,7 +436,6 @@ export class FacturacionComponent implements OnInit {
     this.authService.getClienteDetails().subscribe(
       (data) => {
         this.clienteDetails = data;
-        console.log('Detalles del cliente:', this.clienteDetails);
       },
       (error) => {
         console.error('Error al obtener detalles del cliente:', error);

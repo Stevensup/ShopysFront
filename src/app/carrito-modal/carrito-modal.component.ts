@@ -89,7 +89,6 @@ formaPagoSeleccionada: this.formaPagoSeleccionada,
    * Realiza el pago.
    */
   pagar(): void {
-    console.log('Pago realizado. Total a pagar:', this.getTotal());
     const isLogin = localStorage.getItem('usuario');
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '400px';
@@ -97,12 +96,6 @@ formaPagoSeleccionada: this.formaPagoSeleccionada,
     dialogConfig.position = { top: '50%', left: '50%' };
     if (this.formaPagoSeleccionada != null) {
       if (isLogin) {
-        console.log('sesion iniciada');
-        console.log('Forma de Pago seleccionada:', this.formaPagoSeleccionada);
-        console.log(
-          'Nombre de la forma de pago:',
-          this.formaPagoSeleccionada.nombre
-        );
         const dialogRef = this.dialog.open(FacturacionComponent, {
           data: {
             productos: this.productosCarrito,
@@ -113,14 +106,11 @@ formaPagoSeleccionada: this.formaPagoSeleccionada,
           panelClass: 'facturacion-modal-container',
         });
         dialogRef.afterClosed().subscribe((result) => {
-          console.log('El modal se cerró');
           this.closeDialog();
         });
       } else {
-        console.log('sesion no iniciada');
         const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
         dialogRef.afterClosed().subscribe((result) => {
-          console.log('El modal se cerró');
         });
       }
     } else {
@@ -188,7 +178,7 @@ formaPagoSeleccionada: this.formaPagoSeleccionada,
    */
   seleccionarFormaPago() {
     if (this.formaPagoSeleccionada && this.formaPagoSeleccionada.disponible) {
-      console.log(
+      console.error(
         'Nombre de la forma de pago seleccionada:',
         this.formaPagoSeleccionada.nombre
       );

@@ -98,7 +98,6 @@ export class VentasComponent implements OnInit {
    * @param producto El producto a agregar al carrito.
    */
   agregarAlCarrito(producto: any): void {
-    console.log('Agregando al carrito:', producto);
     this.carritoService.agregarProducto(producto);
   }
 

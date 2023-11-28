@@ -86,7 +86,7 @@ export class CreateUserModalComponent implements OnInit {
     if (this.userForm.valid) {
       this.authService.registrarUsuario(this.userForm.value).subscribe(
         (response) => {
-          console.log('Usuario registrado con éxito:', response);
+          console.error('Usuario registrado con éxito:', response);
           this.dialogRef.close();
         },
         (error) => {

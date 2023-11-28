@@ -34,18 +34,13 @@ export class AuthService {
       email: email,
       userPassword: encryptedPassword,
     };
-    console.log('requestBody', requestBody);
-    console.log('this.apiUrl', this.apiUrl);
-    console.log(userPassword);
+
     const loginUrl = `${this.apiUrl}/login`;
 
-    console.log('Making login request to:', loginUrl);
 
     
     return this.http.post(loginUrl, requestBody).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Error during login:', error);
-        console.log('Full server response:', error.error); // Agrega esta línea
         const errorMessage = error.error;
 
         // Retorna el mensaje de error
@@ -71,7 +66,6 @@ export class AuthService {
     return this.http.post(registroUrl, usuario).pipe(
       catchError((error) => {
         console.error('Error during login:', error);
-        console.log('Full server response:', error.error); // Agrega esta línea
         return throwError(
           'Authentication failed. Please check your credentials.'
         );

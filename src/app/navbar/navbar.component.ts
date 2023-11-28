@@ -30,7 +30,6 @@ export class NavbarComponent {
   ngOnInit(): void {
     this.usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     this.loginstatus = localStorage.getItem('usuario') ? true : false;
-    console.log(this.loginstatus);
     this.carritoService.obtenerCantidadEnCarrito().subscribe((cantidad) => {
       this.cantidadEnCarrito = cantidad;
       this.authService.setLoggedIn(false);
@@ -50,7 +49,6 @@ export class NavbarComponent {
       this.usuario = null;
     }
     this.loginstatus = !!userData.message;
-    console.log(this.loginstatus);
   }
 
   // Agrega el método para abrir el modal de inicio de sesión
@@ -64,7 +62,6 @@ export class NavbarComponent {
     const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('El modal se cerró');
       this.loginstatus = localStorage.getItem('usuario') ? true : false;
       this.usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     });
@@ -78,8 +75,7 @@ export class NavbarComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('El modal de carrito se cerró');
-      // Puedes agregar lógica adicional después de cerrar el modal si es necesario
+
     });
   }
   realizarAccion(): void {
@@ -89,8 +85,7 @@ export class NavbarComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('El modal de carrito se cerró');
-      // Puedes agregar lógica adicional después de cerrar el modal si es necesario
+
     });
   }
   get isLoggedIn(): boolean {

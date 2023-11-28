@@ -61,22 +61,14 @@ export class LoginModalComponent implements OnInit {
 
       this.authService.login(this.email, this.userPassword).pipe(
         tap((response) => {
-          // Maneja la respuesta del servidor después de intentar iniciar sesión
-          console.log('Respuesta del backend:', response);
-          // Puedes realizar acciones adicionales después de un inicio de sesión exitoso
-          // Por ejemplo, cerrar el modal
+
           localStorage.setItem('usuario', JSON.stringify(response));
           const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-          console.log(usuario);
           this.dialogRef.close();
         }),
         catchError((error: HttpErrorResponse) => {
           console.error('Error del backend:', error);
           console.error('Error during login:', error);
-          console.log('Full server response:', error.error); // Agrega esta línea
-          // Imprime el contenido exacto del error para examinarlo
-          console.log('Contenido del error:', error);
-
           this.errorMessage = JSON.stringify(error); // O puedes usar error.toString()          
 
           return throwError(this.errorMessage); // Asegura que el error se propague
